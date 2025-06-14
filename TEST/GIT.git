@@ -1,0 +1,23 @@
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add originhttps://github.com/OliverFeronel090597/Pogo-Pin-Monitoring-System.git
+git push -u origin main
+
+
+git rev-parse --show-toplevel  -- Show main dir
+
+
+git pull origin main --allow-unrelated-histories -- get all file in repo to align files
+
+
+git add .
+git commit -m "Merge with remote main"
+git push -u origin main
+
+
+git status
+
+
+Remove-Item -Recurse -Force .git -- remove current repo

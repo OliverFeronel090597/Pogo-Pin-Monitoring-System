@@ -1,0 +1,578 @@
+/* ##############################################################################
+   #####                           MainWindow                               #####
+   ############################################################################## */
+
+QWidget {
+    background-color: #2d2d2d;
+    color: #ECF0F1;
+    font-size: 11pt;
+    font-family: 'Segoe UI';
+}
+
+QMainWindow {
+    background-color: #252525;
+}
+
+QMenuBar {
+    background-color: #1a1a1a;
+    color: #ECF0F1;
+}
+
+QMenu {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #3498DB;
+    padding: 4px;
+}
+
+QMenu::item {
+    background-color: #353535;
+    color: #ECF0F1;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+QMenu::item:disabled {
+    background-color: #353535;
+    color: #666666;
+}
+
+QMenu::item:selected {
+    background-color: #3498DB;
+    color: white;
+}
+
+QFrame[role="UnderlineSeperator"] {
+    border: none;
+    border-top: 2px solid #5050ff;
+    background-color: #202055;
+}
+
+QFrame[role="SlideNotification"] {
+    background-color: #1c5a4d;
+    border-radius: 8px;
+    padding: 4px;
+    font-size: 14px;
+    border: 2px solid #ff3737;
+}
+
+QLabel[role="SlideNotificationLabel"] {
+    background-color: transparent;
+    color: #ff6b6b;
+    border-radius: 8px;
+    padding: 2px;
+    font-size: 14px;
+    font-family: 'Segoe UI';
+}
+
+QLabel[role="taskBar"] {
+    font-size: 11px;
+    font-weight: bold;
+    color: #bdc3c7;
+}
+
+QPushButton[role="controlButton"] {
+    background-color: #3498DB;
+    color: white;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+QPushButton[role="controlButton"]:hover {
+    background-color: #2980b9;
+}
+
+QPushButton[role="controlButton"]:disabled {
+    background-color: #555555;
+    color: #999999;
+}
+
+QDialog[role="aboutApp"] {
+    background-color: #2d2d2d;
+    color: #ECF0F1;
+}
+
+/* Role-based styling */
+QLabel[role="app_info"],
+QLabel[role="license"],
+QLabel[role="support"],
+QLabel[role="logo"] {
+    margin-bottom: 12px;
+    background-color: transparent;
+}
+
+/* ##############################################################################
+   #####                           Login Form                               #####
+   ############################################################################## */
+
+QLabel[role="loginForm"] {
+    background-color: transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Segoe UI';
+}
+
+QLineEdit[role="loginForm"] {
+    background-color: #353535;
+    border: 1px solid #555;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Segoe UI';
+    padding: 6px;
+    color: #ECF0F1;
+}
+
+QMessageBox[role="loginForm"] {
+    background-color: #353535;
+    color: #ECF0F1;
+    font-size: 12pt;
+    border: 1px solid #555;
+    border-radius: 10px;
+}
+
+QMessageBox[role="loginForm"] QPushButton {
+    min-width: 80px;
+    background-color: #00a2b8;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+}
+
+QMessageBox[role="loginForm"] QPushButton:hover {
+    background-color: #00bcd4;
+}
+
+QMessageBox[role="loginForm"] QLabel {
+    background-color: transparent;
+    font-size: 12pt;
+}
+
+/* Show/Hide password controls */
+QLineEdit[role="showHide"] {
+    background-color: #353535;
+    border: 1px solid #555;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 14px;
+    font-family: 'Segoe UI';
+    padding: 6px;
+    color: #ECF0F1;
+}
+
+QPushButton[role="showHide"] {
+    background-color: #353535;
+    border: 1px solid #555;
+    border-left: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    font-size: 14px;
+    font-family: 'Segoe UI';
+    padding: 6px;
+    color: #ECF0F1;
+}
+
+QPushButton[role="showHide"]:hover {
+    background-color: #454545;
+}
+
+/* LoginForm Button */
+QPushButton[role="loginForm"] {
+    background-color: #00a2b8;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+}
+
+QPushButton[role="loginForm"]:hover {
+    background-color: #00bcd4;
+}
+
+QPushButton[role="loginForm"]:disabled {
+    background-color: #555555;
+    color: #999999;
+}
+
+/*  ##############################################################################
+    #####                           Add New Form                             #####
+    ############################################################################## */
+/* Team label title */
+QLabel[role="teamLabel"] {
+    font-size: 30px;
+    font-weight: bold;
+    color: #ECF0F1;
+    background-color: transparent;
+}
+
+/* Form section title */
+QLabel[role="formTitle"] {
+    font-size: 22px;
+    font-weight: bold;
+    color: #bdc3c7;
+    margin-bottom: 15px;
+}
+
+/* Required field label */
+QLabel[required="true"] {
+    font-size: 15px;
+    font-weight: bold;
+    color: #bdc3c7;
+}
+
+/* Generic input styling */
+QLineEdit[role="autoFill"],
+QLineEdit[role="calendarEdit"],
+QLineEdit[role="numCharInput"],
+QLineEdit[role="siteInput"] {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #555;
+    padding: 7px;
+    border-radius: 4px;
+}
+
+QTextEdit[role="autoSuggest"]:focus,
+QSpinBox[role="CustomSpinBox"]:focus,
+QLineEdit[role="autoFill"]:focus,
+QLineEdit[role="calendarEdit"]:focus,
+QLineEdit[role="numCharInput"]:focus,
+QLineEdit[role="siteInput"]:focus {
+    border: 1px solid #3498db;
+    background-color: #454545;
+}
+
+/* SpinBox styling */
+QSpinBox[role="CustomSpinBox"] {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 7px;
+    font-size: 11pt;
+    selection-background-color: #3498db;
+    selection-color: #ECF0F1;
+}
+
+/* Hide SpinBox up/down buttons */
+QSpinBox[role="CustomSpinBox"]::up-button,
+QSpinBox[role="CustomSpinBox"]::down-button {
+    width: 0px;
+    height: 0px;
+    border: none;
+    background: none;
+}
+
+/* ComboBox (SAP Number) base styling */
+QComboBox[role="sapNumber"] {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #555;
+    padding: 4px 8px;
+    font-size: 11pt;
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 4px;
+    min-height: 28px;
+}
+
+QComboBox[role="sapNumber"]:focus {
+    border: 1px solid #3498db;
+    background-color: #454545;
+}
+
+/* ComboBox dropdown list */
+QComboBox[role="sapNumber"] QAbstractItemView {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #555;
+    font-size: 11pt;
+    font-family: 'Segoe UI', sans-serif;
+    selection-background-color: #3498db;
+    selection-color: #ECF0F1;
+    outline: none;
+}
+
+QComboBox[role="sapNumber"] QAbstractItemView::item:hover {
+    background-color: #454545;
+    color: #ECF0F1;
+}
+
+/* ComboBox scrollbar */
+QComboBox[role="sapNumber"] QScrollBar:vertical {
+    border: none;
+    background: #454545;
+    width: 10px;
+    margin: 2px 0;
+    border-radius: 5px;
+}
+
+QComboBox[role="sapNumber"] QScrollBar::handle:vertical {
+    background: #666666;
+    min-height: 20px;
+    border-radius: 5px;
+}
+
+QComboBox[role="sapNumber"] QScrollBar::handle:vertical:hover {
+    background: #7F8C8D;
+}
+
+QComboBox[role="sapNumber"] QScrollBar::add-line:vertical,
+QComboBox[role="sapNumber"] QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QComboBox[role="sapNumber"] QScrollBar::add-page:vertical,
+QComboBox[role="sapNumber"] QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+/* Hide drop-down button and arrow */
+QComboBox[role="sapNumber"]::drop-down {
+    width: 0px;
+    border: none;
+}
+
+QComboBox[role="sapNumber"]::down-arrow {
+    width: 0px;
+    height: 0px;
+    image: none;
+}
+
+/* CalendarWidget ComboBox styling */
+QCalendarWidget[role="selectCalendar"] QComboBox {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #555;
+    padding: 2px 4px;
+    font-family: 'Segoe UI';
+    font-size: 10pt;
+    border-radius: 3px;
+}
+
+/* Calendar table headers */
+QCalendarWidget[role="selectCalendar"] QTableView QHeaderView::section {
+    background-color: #454545;
+    color: #ECF0F1;
+    font-weight: bold;
+    padding: 3px;
+    border: 1px solid #555;
+}
+
+/* Hovering calendar cells */
+QCalendarWidget[role="selectCalendar"] QTableView::item:hover {
+    background-color: #454545;
+    color: #ECF0F1;
+    border: 1px solid #3498db;
+}
+
+/* Style for the QTextEdit SuggestTextEdit */
+QTextEdit[role="autoSuggest"] {
+    background-color: #353535;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 4px;
+    font-size: 15px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #ECF0F1;
+    selection-background-color: #3498db;
+    selection-color: #ECF0F1;
+}
+
+/* Scrollbar styling for QTextEdit */
+QTextEdit[role="autoSuggest"] QScrollBar:vertical {
+    width: 8px;
+    background: #353535;
+}
+
+QTextEdit[role="autoSuggest"] QScrollBar::handle:vertical {
+    background: #666666;
+    border-radius: 4px;
+}
+
+QTextEdit[role="autoSuggest"] QScrollBar::handle:vertical:hover {
+    background: #7F8C8D;
+}
+
+/* Style for the QCompleter popup */
+QListView[role="suggestionPopup"] {
+    background-color: #353535;
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #ECF0F1;
+    padding: 2px;
+    font-size: 14px;
+    font-family: Segoe UI, sans-serif;
+    selection-background-color: #3498db;
+    selection-color: #ECF0F1;
+}
+
+QPushButton[role="saveButton"] {
+    background-color: #3498DB;
+    color: white;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+QPushButton[role="saveButton"]:hover {
+    background-color: #2980b9;
+}
+
+/*  ##############################################################################
+    #####                           SAP and History                          #####
+    ############################################################################## */
+QTableWidget {
+    border: 1px solid #555;
+    background-color: #353535;
+    gridline-color: #555;
+    color: #ECF0F1;
+    font-size: 12px;
+    selection-background-color: #3498db;
+    selection-color: #ECF0F1;
+    alternate-background-color: #3d3d3d;
+}
+
+/* Vertical Scrollbar */
+QTableWidget QScrollBar:vertical {
+    background-color: #454545;
+    width: 12px;
+    margin: 0px;
+    border: none;
+}
+
+QTableWidget QScrollBar::handle:vertical {
+    background-color: #666666;
+    min-height: 20px;
+    border-radius: 4px;
+}
+
+QTableWidget QScrollBar::handle:vertical:hover {
+    background-color: #7F8C8D;
+}
+
+QTableWidget QScrollBar::add-line:vertical,
+QTableWidget QScrollBar::sub-line:vertical {
+    height: 0px;
+    background: none;
+    border: none;
+}
+
+QTableWidget QScrollBar::add-page:vertical,
+QTableWidget QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+/* Horizontal Scrollbar */
+QTableWidget QScrollBar:horizontal {
+    background-color: #454545;
+    height: 12px;
+    margin: 0px;
+    border: none;
+}
+
+QTableWidget QScrollBar::handle:horizontal {
+    background-color: #666666;
+    min-width: 20px;
+    border-radius: 4px;
+}
+
+QTableWidget QScrollBar::handle:horizontal:hover {
+    background-color: #7F8C8D;
+}
+
+QTableWidget QScrollBar::add-line:horizontal,
+QTableWidget QScrollBar::sub-line:horizontal {
+    width: 0px;
+    background: none;
+    border: none;
+}
+
+QTableWidget QScrollBar::add-page:horizontal,
+QTableWidget QScrollBar::sub-page:horizontal {
+    background: none;
+}
+
+QTableWidget::item:hover {
+    background-color: #454545;
+}
+
+QTableWidget::item:selected {
+    background-color: #3498db;
+    color: #ECF0F1;
+}
+
+QHeaderView::section {
+    background-color: #454545;
+    padding: 4px;
+    border: none;
+    font-weight: 600;
+    font-size: 12px;
+    color: #ECF0F1;
+}
+
+QTableWidget QLineEdit {
+    font-size: 12px;
+    color: #ECF0F1;
+    padding: 2px;
+    border: 1px solid #555;
+    background-color: #353535;
+}
+
+QPushButton[role="sapAdd"] {
+    background-color: #0066ff;
+    color: white;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: bold;
+}
+
+QPushButton[role="sapSave"] {
+    background-color: #00aa22;
+    color: white;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: bold;
+}
+
+QPushButton[role="sapDelete"] {
+    background-color: #ff0c0c;
+    color: white;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: bold;
+}
+
+QPushButton[role="sapAdd"]:hover,
+QPushButton[role="sapSave"]:hover,
+QPushButton[role="sapDelete"]:hover {
+    background-color: #2980b9;
+}
+
+QMessageBox {
+    background-color: #353535;
+    color: #ECF0F1;
+    font-size: 12pt;
+    border: 1px solid #555;
+    border-radius: 10px;
+}
+
+QMessageBox QPushButton {
+    min-width: 80px;
+    background-color: #00a2b8;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+}
+
+QMessageBox QPushButton:hover {
+    background-color: #00bcd4;
+}
+
+QMessageBox QLabel {
+    background-color: transparent;
+    font-size: 12pt;
+}

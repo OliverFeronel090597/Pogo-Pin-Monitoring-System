@@ -1,0 +1,62 @@
+QWidget {
+    background-color: #dfdfdf;
+    color: #2C3E50;
+    font-size: 11pt;
+    font-family: 'Segoe UI';
+}
+
+QPushButton {
+    background-color: #3498DB;
+    color: white;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+QPushButton:hover {
+    background-color: #2980b9;
+}
+
+QPushButton:disabled {
+    background-color: #bdc3c7;
+    color: #7f8c8d;
+}
+
+QLabel {
+    font-size: 11px;
+    font-weight: bold;
+    color: #34495e;
+    border: 1px solid #34495e;
+    border-radius: 2px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+/* Style for the QPlainTextEdit SuggestTextEdit */
+QPlainTextEdit {
+    background-color: #fdfdfd;
+    border: 1px solid #c0c0c0;
+    border-radius: 6px;
+    padding: 4px;
+    font-size: 11px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #202020;
+    selection-background-color: #b3d7ff;
+    selection-color: #000000;
+}
+
+/* Scrollbar styling for QPlainTextEdit (optional) */
+QPlainTextEdit QScrollBar:vertical {
+    width: 8px;
+    background: transparent;
+}
+
+QPlainTextEdit QScrollBar::handle:vertical {
+    background: #a0a0a0;
+    border-radius: 4px;
+}
+
+QPlainTextEdit QScrollBar::handle:vertical:hover {
+    background: #707070;
+}

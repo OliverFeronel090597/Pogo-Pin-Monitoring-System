@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/resources">
+    <file>light.qss</file>
+    <file>SP_TitleBarMenuButton.png</file>
+  </qresource>
+</RCC>

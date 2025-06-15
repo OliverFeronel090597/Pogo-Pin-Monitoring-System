@@ -120,8 +120,8 @@ class History(QWidget):
         self.bhw_data.setProperty("role", "historyInput")
 
         # Date range with label
-        self.date_range = DateRangeLineEdit(parent=self)
-        self.date_range.editingFinished.connect(self.load_by_date)
+        self.date_range = DateRangeLineEdit(func=self.load_by_date, parent=self)
+       # self.date_range.editingFinished.connect(self.load_by_date)
         date_label = QLabel("Date Range:")
         date_label.setMaximumWidth(100)
         date_label.setProperty("role", "historyLabel")

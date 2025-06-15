@@ -17,6 +17,7 @@ from libs.History import History
 from libs.NotificationManager import NotificationManager
 from libs.LoginForm import LoginDialog
 from libs.About import AboutDialog
+from libs.DataGraphing import DataGraphing
 
 
 class PogoPinMonitoring(QMainWindow):
@@ -37,6 +38,7 @@ class PogoPinMonitoring(QMainWindow):
         self.add_new = AddNew(self)
         self.sap_edit = SAPEdit(self)
         self.histoty = History(self)
+        self.data_graphing = DataGraphing(self)
         self.last_clicked_button = None
 
     def _init_ui(self):
@@ -74,7 +76,7 @@ class PogoPinMonitoring(QMainWindow):
         self.add_new_button.clicked.connect(lambda: self.on_button_click(self.add_new_button, self.stack_widget, 0))
         self.sap_button.clicked.connect(lambda: self.on_button_click(self.sap_button, self.stack_widget, 1))
         self.history_button.clicked.connect(lambda: self.on_button_click(self.history_button, self.stack_widget, 2))
-        self.data_extract_button.clicked.connect(lambda: self.on_button_click(self.data_extract_button, self.stack_widget, 2))
+        self.data_extract_button.clicked.connect(lambda: self.on_button_click(self.data_extract_button, self.stack_widget, 3))
 
         # Add to layout
         self.control_layout.addWidget(self.add_new_button)
@@ -101,6 +103,7 @@ class PogoPinMonitoring(QMainWindow):
         self.stack_widget.addWidget(self.add_new)
         self.stack_widget.addWidget(self.sap_edit)
         self.stack_widget.addWidget(self.histoty)
+        self.stack_widget.addWidget(self.data_graphing)
         self.stack_widget.setCurrentIndex(0)
         self.main_layout.addWidget(self.stack_widget)
 

@@ -11,7 +11,6 @@ git rev-parse --show-toplevel  -- Show main dir
 
 git pull origin main --allow-unrelated-histories -- get all file in repo to align files
 
-
 git add .
 git commit -m "Merge with remote main"
 git push -u origin main

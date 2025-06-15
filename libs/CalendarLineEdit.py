@@ -51,7 +51,7 @@ class DateRangePopup(QFrame):
 
 
 class DateRangeLineEdit(QLineEdit):
-    def __init__(self, width=200, parent=None):
+    def __init__(self, width=200, func=None, parent=None):
         super().__init__(parent)
         self.setMouseTracking(True)
         self.installEventFilter(self)
@@ -61,7 +61,7 @@ class DateRangeLineEdit(QLineEdit):
 
         self.popup = DateRangePopup(self)
         self.popup.hide()
-        self.popup.hidden_signal.connect(self.on_popup_hidden)
+        self.popup.hidden_signal.connect(func)
 
         self.popup.start_calendar.selectionChanged.connect(self.update_date_range)
         self.popup.end_calendar.selectionChanged.connect(self.update_date_range)

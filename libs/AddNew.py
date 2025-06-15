@@ -229,8 +229,8 @@ class AddNew(QWidget):
         self.database.insert_history(
             self.bhw_name.text(),
             self.date_replaced.text(),
-            self.sap_input.currentText(),
             self.run_count.text(),
+            self.sap_input.currentText(),
             self.pogo_pin_use.text(),
             self.total_price.text(),
             self.select_site.text(),

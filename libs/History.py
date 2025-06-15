@@ -9,6 +9,7 @@ from libs.DatabaseConnector import DatabaseConnector
 from libs.CustomSpinBox import CustomSpinBox
 from libs.CompleterLineEdit import CompleterLineEdit
 from libs.CalendarLineEdit import DateRangeLineEdit
+from libs.EditHistory import EditHistoryDialog
 
 
 class ReadOnlyTable(QTableWidget):
@@ -47,10 +48,13 @@ class ReadOnlyTable(QTableWidget):
             if menu.exec(self.mapToGlobal(pos)) == print_action:
                 row = item.row()
                 values = [self.item(row, col).text() for col in range(self.columnCount())]
-                print("Selected Row Data:")
-                for header, value in zip(self.headers, values):
-                    print(f"{header}: {value}")
-                print("-" * 40)
+                data = dict(zip(self.headers, values))
+                self.edit_history = EditHistoryDialog(data=data, parent=self)
+                self.edit_history.exec()
+
+                                # for header, value in data:
+                #     print(f"{header}: {value}")
+                # print("-" * 40)
 
     def eventFilter(self, obj, event):
         if event.type() == QEvent.Type.KeyPress and event.matches(QKeySequence.StandardKey.Copy):
@@ -173,39 +177,41 @@ class History(QWidget):
         self.load_data(data)
 
     def load_data(self, data: list[tuple]):
-        # Filter out empty rows (all elements None or blank)
-        filtered_data = [
-            row for row in data if any(col not in (None, "", " ") for col in row)
-        ]
+        # Ensure data is not empty and has consistent length
+        if not data:
+            return
 
-        self.table.setRowCount(len(filtered_data))
+        # Determine column count from the first row
+        column_count = len(data[0])
+        self.table.setColumnCount(column_count)
+        self.table.setRowCount(len(data))
 
-        for row_idx, row_data in enumerate(filtered_data):
+        # Set table headers (optional – only if you have them predefined)
+        if hasattr(self, 'headers'):
+            self.table.setHorizontalHeaderLabels(self.headers)
+
+        for row_idx, row_data in enumerate(data):
             for col_idx, col_data in enumerate(row_data):
-                if col_data is None:
-                    display_value = ""
-                else:
-                    display_value = str(col_data)
+                display_value = "" if col_data in (None, "", " ") else str(col_data)
 
                 item = QTableWidgetItem(display_value)
                 item.setFlags(Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEnabled)
 
-                # Convert ID column (index 0) to integer for proper sorting
+                # Special handling for ID column
                 if col_idx == 0:
                     try:
                         item.setData(Qt.ItemDataRole.DisplayRole, int(col_data))
                     except (ValueError, TypeError):
-                        item.setData(Qt.ItemDataRole.DisplayRole, 0)  # fallback if conversion fails
+                        item.setData(Qt.ItemDataRole.DisplayRole, 0)
 
                 self.table.setItem(row_idx, col_idx, item)
 
         # Resize all columns except the last
-        for col in range(self.table.columnCount() - 1):
+        for col in range(column_count - 1):
             self.table.resizeColumnToContents(col)
 
         # Stretch the last column after layout update
         QTimer.singleShot(0, lambda: self.table.horizontalHeader().setStretchLastSection(True))
-
 
     def clear_table(self):
         self.table.setRowCount(0)

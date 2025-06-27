@@ -1,8 +1,8 @@
-import sys
 from PyQt6.QtCore import Qt, QPropertyAnimation, QPoint, QEasingCurve, QTimer
 from PyQt6.QtWidgets import (
-     QWidget, QLabel, QHBoxLayout, QFrame, QGraphicsOpacityEffect, QApplication, QStyle
+    QWidget, QLabel, QHBoxLayout, QFrame, QApplication, QStyle
 )
+
 
 class SlideNotification(QFrame):
     def __init__(self, text, parent, icon_name=None, position="left"):
@@ -12,10 +12,10 @@ class SlideNotification(QFrame):
         self.setProperty("role", "SlideNotification")
         self.setFixedSize(250, 70)
 
+        # Icon setup
         icon_enum = getattr(QStyle.StandardPixmap, "SP_MessageBoxInformation" if not self.icon_name else self.icon_name)
         icon = QApplication.style().standardIcon(icon_enum)
         pixmap = icon.pixmap(32, 32)
-
 
         self.label_icon = QLabel()
         self.label_icon.setPixmap(pixmap)
@@ -29,36 +29,24 @@ class SlideNotification(QFrame):
 
         layout = QHBoxLayout(self)
         layout.setContentsMargins(10, 5, 10, 5)
-        layout.addWidget(self.label_icon )
+        layout.addWidget(self.label_icon)
         layout.addWidget(label)
 
-        # Set opacity effect
-        self.opacity = QGraphicsOpacityEffect(self)
-        self.setGraphicsEffect(self.opacity)
-        self.opacity.setOpacity(0)
-
-        # Fade-in animation
-        self.fade_in_anim = QPropertyAnimation(self.opacity, b"opacity", self)
-        self.fade_in_anim.setDuration(600)
-        self.fade_in_anim.setStartValue(0)
-        self.fade_in_anim.setEndValue(1)
-
-        # Fade-out animation
-        self.fade_out_anim = QPropertyAnimation(self.opacity, b"opacity", self)
-        self.fade_out_anim.setDuration(800)
-        self.fade_out_anim.setStartValue(1)
-        self.fade_out_anim.setEndValue(0)
-        self.fade_out_anim.finished.connect(self.close)
-
         # Slide-in animation
-        self.pos_anim = QPropertyAnimation(self, b"pos", self)
-        self.pos_anim.setEasingCurve(QEasingCurve.Type.OutCubic)
-        self.pos_anim.setDuration(900)
+        self.slide_in_anim = QPropertyAnimation(self, b"pos", self)
+        self.slide_in_anim.setEasingCurve(QEasingCurve.Type.OutCubic)
+        self.slide_in_anim.setDuration(800)
 
-        # Start fade-out timer
-        self.fade_timer = QTimer(self)
-        self.fade_timer.setSingleShot(True)
-        self.fade_timer.timeout.connect(self.start_fade_out)
+        # Slide-out animation
+        self.slide_out_anim = QPropertyAnimation(self, b"pos", self)
+        self.slide_out_anim.setEasingCurve(QEasingCurve.Type.InCubic)
+        self.slide_out_anim.setDuration(800)
+        self.slide_out_anim.finished.connect(self.close)
+
+        # Auto-close timer
+        self.slide_timer = QTimer(self)
+        self.slide_timer.setSingleShot(True)
+        self.slide_timer.timeout.connect(self.start_slide_out)
 
     def animate(self, target_pos):
         # Determine slide-in start position
@@ -68,16 +56,24 @@ class SlideNotification(QFrame):
             start_pos = QPoint(self.parent().width(), target_pos.y())
 
         self.move(start_pos)
-        self.pos_anim.setStartValue(start_pos)
-        self.pos_anim.setEndValue(target_pos)
-        self.pos_anim.start()
-        self.fade_in_anim.start()
+        self.slide_in_anim.setStartValue(start_pos)
+        self.slide_in_anim.setEndValue(target_pos)
+        self.slide_in_anim.start()
 
-        # Start fade-out after delay
-        self.fade_timer.start(3500)
+        self.slide_timer.start(3000)  # time before slide-out
 
-    def start_fade_out(self):
-        self.fade_out_anim.start()
+    def start_slide_out(self):
+        # Slide out in opposite direction
+        current_y = self.y()
+        if self.position == "left":
+            end_pos = QPoint(-self.width(), current_y)
+        else:
+            end_pos = QPoint(self.parent().width(), current_y)
+
+        self.slide_out_anim.setStartValue(self.pos())
+        self.slide_out_anim.setEndValue(end_pos)
+        self.slide_out_anim.start()
+
 
 class NotificationManager(QWidget):
     """
@@ -111,7 +107,7 @@ class NotificationManager(QWidget):
     "SP_BrowserStop",
         """
 
-    def __init__(self, parent,icon_name=None, position="left"):
+    def __init__(self, parent, icon_name=None, position="left"):
         super().__init__(parent)
         self.notifications = []
         self.icon_name =  icon_name

@@ -1,8 +1,8 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QStackedWidget, QFrame, QLabel
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QStackedWidget, QFrame, QLabel, QMessageBox
 )
 from PyQt6.QtGui import QAction, QIcon
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QTimer
 import sys
 
 from libs.DatabaseConnector import DatabaseConnector
@@ -59,6 +59,7 @@ class PogoPinMonitoring(QMainWindow):
 
         # Set default page
         self.on_button_click(self.add_new_button, self.stack_widget, 0)
+        QTimer.singleShot(5000, self.version_check)
 
     def _create_controls(self):
         self.control_layout = QHBoxLayout()
@@ -67,7 +68,7 @@ class PogoPinMonitoring(QMainWindow):
         self.main_layout.addLayout(self.control_layout)
 
         # Buttons
-        self.add_new_button = ControlButton(name="Insert Data")
+        self.add_new_button = ControlButton(name="New Item")
         self.sap_button = ControlButton(name="SAP")
         self.history_button = ControlButton(name="History")
         self.data_extract_button = ControlButton(name="Extract Data")
@@ -122,9 +123,10 @@ class PogoPinMonitoring(QMainWindow):
         file_menu.addAction(exit_action)
 
         # System Menu
-        system_menu = menubar.addMenu("System")
+        menu_title = "System 🔴" if not self.version_check(True) else "System"
+        system_menu = menubar.addMenu(menu_title)
         check_update_action = QAction("Check for Updates", self)
-        check_update_action.triggered.connect(lambda: self.show_notification("Application is up to date."))
+        check_update_action.triggered.connect(self.version_check)
         system_menu.addAction(check_update_action)
 
         # Account Menu
@@ -185,10 +187,34 @@ class PogoPinMonitoring(QMainWindow):
         self.about_app = AboutDialog(parent=self)
         self.about_app.exec()
 
+    def version_check(self, sys_check=False):
+        version = GlobalState.app_version
+        is_old_version = self.database.check_version(version)
+        if sys_check:
+            return is_old_version
+        
+        print(is_old_version)
+        if not is_old_version:
+            self.show_notification("Application is up to date.")
+        else:
+            self.show_notification("Application is outdated.")
+
     def resizeEvent(self, event):
         super().resizeEvent(event)
         self.notification_manager.reposition_notifications()
 
+    def closeEvent(self, event):
+        reply = QMessageBox.question(
+            self,
+            "Exit Confirmation",
+            "Are you sure you want to exit?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No
+        )
+        if reply == QMessageBox.StandardButton.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 if __name__ == "__main__":
     print(__name__)

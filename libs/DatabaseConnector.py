@@ -341,3 +341,15 @@ class DatabaseConnector:
         '''
         results = self.execute_query(query, params=(start_date, end_date), fetch_all=True)
         return results
+
+
+
+    ##############################################################################
+    #####                           VERSION QUERY                            #####
+    ##############################################################################
+
+    def check_version(self, curr_version):
+        """Check if current version is in archive ->\nIf true must be using old version."""
+        result = self.execute_query(query="SELECT VERSION FROM OLD_VERSION WHERE VERSION = ? ", params=(curr_version,), fetch_one=True)
+        return False if not result else True
+          

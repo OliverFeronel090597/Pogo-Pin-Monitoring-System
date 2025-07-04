@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QLineEdit, QDialog
-from libs.NumberInputDialog import NumberInputDialog
+from libs.NumberInputDialog import SiteSelectDialog
 
 class SelectSite(QLineEdit):
     def __init__(self,width = 200, initial_text="Double click", parent=None):
@@ -11,7 +11,7 @@ class SelectSite(QLineEdit):
 
     def mouseDoubleClickEvent(self, event):
         """Handle double-click events to open a number input dialog."""
-        dialog = NumberInputDialog(self.text(), self)  # Pass existing text to the dialog
+        dialog = SiteSelectDialog(initial_sites=self.text(), parent=self)  # Pass existing text to the dialog
         if dialog.exec() == QDialog.DialogCode.Accepted:
             selected_values = dialog.selected_numbers
             sites = len(selected_values)

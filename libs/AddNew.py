@@ -73,8 +73,10 @@ class AddNew(QWidget):
         self.total_price = NumCharLineEdit(allow_numbers_only=True, width=300, enable=False, parent=self)
 
         self.select_site = SelectSite(width=300, parent=self)
+        self.select_site.setReadOnly(True)
 
         self.login_user = NumCharLineEdit(allow_numbers_only=False, width=300, parent=self)
+        self.login_user.textChanged.connect(self.uppercase_login_user)
         self.login_user.setText(get_login_user())
         item = self.database.get_convert_history()
 
@@ -117,6 +119,13 @@ class AddNew(QWidget):
 
         self.get_pogo_price()
 
+    def uppercase_login_user(self, text):
+        current_cursor_pos = self.login_user.cursorPosition()
+        self.login_user.blockSignals(True)  # Prevent recursion
+        self.login_user.setText(text.upper())
+        self.login_user.setCursorPosition(current_cursor_pos)
+        self.login_user.blockSignals(False)
+
     def add_form_row(self, form_layout, label_text, widget, required=False):
         """Helper method to add a row to the form with styled label"""
         label = QLabel(label_text)
@@ -135,7 +144,7 @@ class AddNew(QWidget):
         total_price = self.pogo_price * int(self.pogo_pin_use.text())
         self.total_price.setText("{:.2f}".format(total_price))
 
-    def bhw_valid(self, bhw):
+    def bhw_valid(self, bhw, func):
         QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         if hasattr(self, 'get_run_count') and self.get_run_count is not None and self.get_run_count.isRunning():
             print("Previous thread is still running")
@@ -178,7 +187,7 @@ class AddNew(QWidget):
         self.logo_layout.addSpacing(100)
 
         self.image_label = ImageLabel(
-            r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\image.png",
+            ":/resources/image.png",
             self
         )
         self.logo_layout.addWidget(self.image_label)
@@ -269,6 +278,7 @@ class AddNew(QWidget):
     def on_mail_sent(self, result: str):
         #QMessageBox.information(self, "Email Result", result)
         self.main_parent.show_notification(result)
+        GlobalState.made_changes = True
         print(result)
 
     def resizeEvent(self, event):

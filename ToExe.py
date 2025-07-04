@@ -3,13 +3,13 @@ import os
 import platform
 
 # === Configuration ===
-script_path = "RccAuto.py"
-icon_path = r"ICON\SP_TitleBarMenuButton.png"
+script_path = "PPM_V5.py"
+icon_path = "icon\main-logo.png"
 output_dir = "EXE"
 
 # List of extra files or folders to include (source, destination_inside_exe)
 extra_files = [
-    (r"bin", "bin"),  # <-- Add your bin folder here
+    #(r"bin", "bin"),  # <-- Add your bin folder here
 ]
 
 def is_windows():
@@ -31,7 +31,7 @@ pyinstaller_command = [
     "--onefile",
     "--windowed",
     f"--icon={icon_path}",
-    f"--name=RccAutoCreator",
+    f"--name=PPMv5",
     script_path,
 ]
 

@@ -646,3 +646,114 @@ QCalendarWidget QTableView::item:hover {
     color: #000000;
     border: 1px solid #3399FF;
 }
+
+/*  ##############################################################################
+    #####                           Data Graph                               #####
+    ############################################################################## */
+
+QLabel[role="dataGraph"] {
+    font-size: 15px;
+    font-weight: bold;
+    color: #34495e;
+}
+
+/* Generic input styling */
+QLineEdit[role="dataGraph"] {
+    background-color: #FFFFFF;
+    color: #2C3E50;
+    border: 1px solid #BDC3C7;
+    padding: 1px;
+    border-radius: 4px;
+    font-size: 11pt;
+}
+
+/* QComboBox[role="dataGraph"] {
+    background-color: #FFFFFF;
+    color: #2C3E50;
+    border: 1px solid #BDC3C7;
+    padding: 1px;
+    border-radius: 4px;
+} */
+
+
+/* ComboBox (SAP Number) base styling */
+QComboBox[role="dataGraph"] {
+    background-color: #ffffff;
+    color: #2C3E50;
+    border: 1px solid #BDC3C7;
+    padding: 1px;
+    font-size: 11pt;
+    border-radius: 4px;
+}
+
+QComboBox[role="dataGraph"]:focus {
+    border: 1px solid #3498db;
+    background-color: #ffffff;
+}
+
+/* ComboBox dropdown list */
+QComboBox[role="dataGraph"] QAbstractItemView {
+    background-color: #ffffff;
+    color: #2C3E50;
+    border: 1px solid #BDC3C7;
+    font-size: 11pt;
+    font-family: 'Segoe UI', sans-serif;
+    selection-background-color: #3498db;
+    selection-color: #ffffff;
+    outline: none;
+}
+
+QComboBox[role="dataGraph"] QAbstractItemView::item:hover {
+    background-color: #D6EAF8;
+    color: #2C3E50;
+}
+
+/* ComboBox scrollbar */
+QComboBox[role="dataGraph"] QScrollBar:vertical {
+    border: none;
+    background: #ECF0F1;
+    width: 10px;
+    margin: 2px 0;
+    border-radius: 5px;
+}
+
+QComboBox[role="dataGraph"] QScrollBar::handle:vertical {
+    background: #95A5A6;
+    min-height: 20px;
+    border-radius: 5px;
+}
+
+QComboBox[role="dataGraph"] QScrollBar::handle:vertical:hover {
+    background: #7F8C8D;
+}
+
+QComboBox[role="dataGraph"] QScrollBar::add-line:vertical,
+QComboBox[role="dataGraph"] QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QComboBox[role="dataGraph"] QScrollBar::add-page:vertical,
+QComboBox[role="dataGraph"] QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+/* Hide drop-down button and arrow */
+QComboBox[role="dataGraph"]::drop-down {
+    width: 0px;
+    border: none;
+}
+
+QComboBox[role="dataGraph"]::down-arrow {
+    width: 0px;
+    height: 0px;
+    image: none;
+}
+
+QPushButton[role="dataGraph"] {
+    background-color: #3498DB;
+    border: 1px solid #BDC3C7;
+    color: white;
+    border-radius: 4px;
+    padding: 2px;
+    font-size: 11pt;
+}

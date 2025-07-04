@@ -3,12 +3,12 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import QSize
 
 
-class NumberInputDialog(QDialog):
+class SiteSelectDialog(QDialog):
     def __init__(self, initial_sites="", parent=None):
         super().__init__(parent)
 
         self.setWindowTitle("Select Sites")
-        self.setWindowIcon(QIcon(":/mainlogo.png"))
+        # self.setWindowIcon(QIcon(":/mainlogo.png")) will be inherit from parent
         self.setFixedSize(450, 250)
 
         self.selected_numbers = self.parse_initial_sites(initial_sites)

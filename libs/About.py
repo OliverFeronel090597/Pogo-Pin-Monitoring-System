@@ -25,7 +25,7 @@ class AboutDialog(QDialog):
         logo_layout = QHBoxLayout()
         logo_label = QLabel()
         logo_label.setProperty("role", "logo")
-        logo_pixmap = QPixmap(r'C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\icon\main-logo.png').scaled(
+        logo_pixmap = QPixmap(":/resources/main-logo.png").scaled(
             200, 200, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
         logo_label.setPixmap(logo_pixmap)
         logo_layout.addWidget(logo_label)

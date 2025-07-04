@@ -146,6 +146,8 @@ class SAPEdit(QWidget):
 
                 return
             
+            GlobalState.made_changes = True
+            
             # First validate all rows
             validated_data = []
             for row in range(self.table.rowCount()):

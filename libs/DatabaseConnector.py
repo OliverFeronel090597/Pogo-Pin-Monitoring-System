@@ -1,19 +1,27 @@
 import sqlite3
 import os
 import re
+from libs.GlobalVariables import GlobalState
 
 class DatabaseConnector:
     def __init__(self):
         # Use raw string to avoid escape sequence issues
-        self.base_path = r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\DATA"
+        self.base_path = GlobalState.database_path #r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\DATA"
 
         # Check and create directory
-        if not os.path.exists(self.base_path):
+        # Check and create directory
+        if os.path.exists(self.base_path):
+            if not os.path.isdir(self.base_path):
+                raise RuntimeError(f"A file exists at {self.base_path}, but a directory is required.")
+        else:
             try:
-                os.makedirs(self.base_path)  # Create directory
+                os.makedirs(self.base_path)
                 print(f"Created directory: {self.base_path}")
             except PermissionError as e:
-                print(str(e))
+                print(f"Permission denied while creating directory: {str(e)}")
+            except Exception as e:
+                print(f"Error creating directory: {str(e)}")
+
 
         # Database path
         self.db_path = os.path.join(self.base_path, "POGOINSERTION.db")
@@ -343,6 +351,78 @@ class DatabaseConnector:
         return results
 
 
+    ##############################################################################
+    #####                           Query for qraphing                            #####
+    ##############################################################################
+
+    def graph_by_bhw(self, date_from, date_to):
+        '''Return unique SAP numbers with their corresponding BHWName and QtyOfPogo within the date range.'''
+        print(f"INFO: Get Graph Data From {date_from} AND {date_to}")
+        query = '''
+            SELECT DISTINCT BHWName, SapNumber, QtyOfPogo
+            FROM POGOINSERTION
+            WHERE DateReplaced BETWEEN ? AND ?
+        '''
+        # Execute the query and return results
+        result = self.execute_query(query, (date_from, date_to), fetch_all=True)
+        
+        if result:
+            return result
+        else:
+            print(f"Error: Nothing found")
+            return []
+    
+    def get_sap_use(self, date_from, date_to):
+        '''Get SAP use in time frame'''
+        print("INFO: Get SAP use in time frame")
+        query = 'SELECT SapNumber FROM POGOINSERTION WHERE DateReplaced BETWEEN ? AND ?'
+        
+        # Execute the query and return results
+        return self.execute_query(query, (date_from, date_to), fetch_all=True)
+
+    def get_total_pogo_use(self, date_from, date_to, sap):
+        '''Get Total pogopin use in time frame'''
+        print(f"INFO: Total pogo use for SAP: {sap}.")
+        query = 'SELECT SUM(QtyOfPogo) FROM POGOINSERTION WHERE SapNumber = ? AND DateReplaced BETWEEN ? AND ?'
+        
+        # Execute the query and return results
+        result = self.execute_query(query, (sap, date_from, date_to), fetch_all=True)
+        if result and result[0][0] is not None:
+            return result[0][0]
+        else:
+            print(f"Error: No QtyOfPogo found for SAPNumber: {sap}")
+            return None
+
+    def get_lb_use_sap(self, date_from, date_to, sap):
+        '''Get all unique LB that use the specified SAP within the time frame.'''
+        print("INFO: Get LB use SAP")
+        # SQL query to select all BHWName where SapNumber matches and DateReplaced is within the date range
+        query = 'SELECT BHWName FROM POGOINSERTION WHERE SapNumber = ? AND DateReplaced BETWEEN ? AND ?'
+        # Execute the query and return all results
+        result = self.execute_query(query, (sap, date_from, date_to), fetch_all=True)
+        if result:
+            # Extract all BHWName values and ensure they are unique by using a set
+            unique_bhw_names = list(set(row[0] for row in result))
+            return unique_bhw_names
+        else:
+            print(f"Error: No BHWName found for SAPNumber: {sap} in the given date range.")
+            return []
+
+    def get_lb_total_use(self, date_from, date_to, lb):
+        '''Get total pogo use for a specific LB within the given date range.'''
+        print('INFO: Get LB total use for a specific LB')
+        # Corrected SQL query to sum the pogo usage for a specific LB within the date range
+        query = 'SELECT SUM(QtyOfPogo) FROM POGOINSERTION WHERE BHWName = ? AND DateReplaced BETWEEN ? AND ?'
+        # Execute the query and return the result
+        result = self.execute_query(query, (lb, date_from, date_to), fetch_all=True)
+        if result and result[0][0] is not None:
+            # Return the total summed quantity
+            return result[0][0]
+        else:
+            print(f"Error: No pogo usage found for LB: {lb} in the given date range.")
+            return 0  # Return 0 instead of an empty list to indicate no usage
+        
+
 
     ##############################################################################
     #####                           VERSION QUERY                            #####
@@ -353,3 +433,4 @@ class DatabaseConnector:
         result = self.execute_query(query="SELECT VERSION FROM OLD_VERSION WHERE VERSION = ? ", params=(curr_version,), fetch_one=True)
         return False if not result else True
           
+

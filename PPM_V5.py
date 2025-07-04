@@ -3,8 +3,14 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.QtCore import Qt, QTimer
+import datetime
 import sys
+import time
+import os
+import shutil
 
+
+from libs.resources import *
 from libs.DatabaseConnector import DatabaseConnector
 from libs.StyleUtils import apply_stylesheet
 from libs.GetUser import get_login_user
@@ -31,7 +37,7 @@ class PogoPinMonitoring(QMainWindow):
         self._create_menu()
         self._create_taskbar()
 
-        apply_stylesheet(self, "THEME/light.qss")
+        apply_stylesheet(self, ":/resources/light.qss")
 
     def _init_modules(self):
         self.slider_switch = ToggleSlider(parent=self)
@@ -42,15 +48,16 @@ class PogoPinMonitoring(QMainWindow):
         self.last_clicked_button = None
 
     def _init_ui(self):
-        self.setWindowTitle("Pogo Pin Monitoring")
-        self.setWindowIcon(QIcon(r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\icon\main-logo.png"))
-        self.setMinimumSize(1000, 780)
+        self.setWindowTitle("Pogo Pin Monitoring BETA")
+        self.setWindowIcon(QIcon(":/resources/main-logo.png"))
+        self.setMinimumSize(1100, 780)
         self.resize(1000, 780)
 
         self.main_widget = QWidget()
         self.setCentralWidget(self.main_widget)
         self.main_layout = QVBoxLayout(self.main_widget)
 
+        #self.header_anouncement()
         self._create_controls()
         self._create_separator()
         self._create_stack_widget()
@@ -59,7 +66,16 @@ class PogoPinMonitoring(QMainWindow):
 
         # Set default page
         self.on_button_click(self.add_new_button, self.stack_widget, 0)
-        QTimer.singleShot(5000, self.version_check)
+        #QTimer.singleShot(5000, self.version_check)
+
+    def header_anouncement(self):
+        self.announcement_layout = QHBoxLayout()
+        self.main_layout.addLayout(self.announcement_layout)
+
+        self.announcement_label = QLabel("Anouncement")
+        self.announcement_label.setProperty("role", "anouncement")
+        self.announcement_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.announcement_layout.addWidget(self.announcement_label)
 
     def _create_controls(self):
         self.control_layout = QHBoxLayout()
@@ -123,7 +139,7 @@ class PogoPinMonitoring(QMainWindow):
         file_menu.addAction(exit_action)
 
         # System Menu
-        menu_title = "System 🔴" if not self.version_check(True) else "System"
+        menu_title = "System" if not self.version_check(True) else "System 🔴"
         system_menu = menubar.addMenu(menu_title)
         check_update_action = QAction("Check for Updates", self)
         check_update_action.triggered.connect(self.version_check)
@@ -147,7 +163,7 @@ class PogoPinMonitoring(QMainWindow):
         self.taskbar_layout = QHBoxLayout()
         self.main_layout.addLayout(self.taskbar_layout)
 
-        self.app_name = QLabel(f"Pogo Pin Monitoring V{GlobalState.app_version}")
+        self.app_name = QLabel(f"Pogo Pin Monitoring V{GlobalState.app_version} Beta")
         self.comp_name = QLabel("AMS Asia .inc")
         self.pc_login_name = QLabel(f"Basic User: {get_login_user().upper()}")
         self.dev_name = QLabel("Contact: oliver.feronel@ams.com")
@@ -193,11 +209,66 @@ class PogoPinMonitoring(QMainWindow):
         if sys_check:
             return is_old_version
         
-        print(is_old_version)
+        # print(is_old_version)
         if not is_old_version:
             self.show_notification("Application is up to date.")
         else:
             self.show_notification("Application is outdated.")
+
+    def delete_old_files_in_directory(self):
+        directory_paths = GlobalState.backup_directory_path  # Get the list of directories
+
+        if not isinstance(directory_paths, list):
+            print("ERROR: GlobalVariable.backup_directory_path should be a list.")
+            return
+
+        current_time = time.time()
+        one_week_in_seconds = 7 * 24 * 60 * 60  # 7 days in seconds
+
+        for directory_path in directory_paths:
+            if not isinstance(directory_path, (str, bytes, os.PathLike)):
+                print(f"ERROR: Invalid path {directory_path}. Skipping...")
+                continue
+
+            if os.path.exists(directory_path) and os.path.isdir(directory_path):
+                for filename in os.listdir(directory_path):
+                    file_path = os.path.join(directory_path, filename)
+
+                    if os.path.isfile(file_path):
+                        last_modified_time = os.path.getmtime(file_path)
+                        file_age_in_seconds = current_time - last_modified_time
+
+                        if file_age_in_seconds > one_week_in_seconds:
+                            print(f"Deleting old file: {file_path}")
+                            os.remove(file_path)
+                            print(f"Deleted: {file_path}")
+                        else:
+                            print(f"File {file_path} is not old enough to delete.")
+            else:
+                print(f"WARNING: The directory {directory_path} does not exist.")
+
+    def backup_data(self):
+        #delete old week backup ar -ofer folder
+        if GlobalState.made_changes: # do backup and delete when changes made
+            self.delete_old_files_in_directory()
+            # Define the paths
+            newname = datetime.datetime.now().strftime("%Y-%m-%d")
+            source_path = GlobalState.database_path  # Replace with the actual path of your .db file
+            backup_directory = GlobalState.backup_directory_path
+            
+            for i, directory in enumerate(backup_directory):
+                # Create the backup directory if it doesn't exist
+                if not os.path.exists(directory):
+                    os.makedirs(directory, exist_ok=True)
+                    
+                    # Construct the target path for the backup
+                    base_name = os.path.basename(source_path)
+                    newnamebackup = f'{newname}_{base_name}' if i == 1 else base_name
+                    backup_path = os.path.join(directory, newnamebackup)
+                    
+                    # Copy the file
+                    shutil.copy(source_path, backup_path)
+                    print(f'Backup created at: {backup_path}')
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -212,12 +283,12 @@ class PogoPinMonitoring(QMainWindow):
             QMessageBox.StandardButton.No
         )
         if reply == QMessageBox.StandardButton.Yes:
+            self.backup_data()
             event.accept()
         else:
             event.ignore()
 
 if __name__ == "__main__":
-    print(__name__)
     app = QApplication(sys.argv)
     window = PogoPinMonitoring()
     window.show()

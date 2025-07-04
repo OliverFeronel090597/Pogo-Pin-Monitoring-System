@@ -38,7 +38,7 @@ class LoginDialog(QDialog):
         self.password_input.setProperty("role", "showHide")
 
         self.show_hide = QPushButton()
-        self.show_hide.setIcon(QIcon(r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\icon\hide.png"))
+        self.show_hide.setIcon(QIcon(":/resources/hide.png"))
         self.show_hide.setFixedSize(20, 35)
         self.show_hide.clicked.connect(self.show_hide_password)
         self.show_hide.setProperty("role", "showHide")
@@ -103,11 +103,11 @@ class LoginDialog(QDialog):
         if self.show_password:
             self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
             self.confirm_input.setEchoMode(QLineEdit.EchoMode.Password)
-            self.show_hide.setIcon(QIcon(r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\icon\hide.png"))
+            self.show_hide.setIcon(QIcon(":/resources/hide.png"))
         else:
             self.password_input.setEchoMode(QLineEdit.EchoMode.Normal)
             self.confirm_input.setEchoMode(QLineEdit.EchoMode.Normal)
-            self.show_hide.setIcon(QIcon(r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\icon\show.png"))
+            self.show_hide.setIcon(QIcon(":/resources/show.png"))
         self.show_password = not self.show_password
 
     def check_login(self):

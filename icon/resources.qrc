@@ -1,6 +1,14 @@
 <RCC>
   <qresource prefix="/resources">
+    <file>ams-osram.png</file>
+    <file>dark.qss</file>
+    <file>darkMode.png</file>
+    <file>hide.png</file>
+    <file>image.png</file>
     <file>light.qss</file>
+    <file>lightMode.png</file>
+    <file>main-logo.png</file>
+    <file>show.png</file>
     <file>SP_TitleBarMenuButton.png</file>
   </qresource>
 </RCC>

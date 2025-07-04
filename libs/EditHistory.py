@@ -14,6 +14,7 @@ from libs.CustomSpinBox import CustomSpinBox
 from libs.CustomLineEditNunChar import NumCharLineEdit
 from libs.SelectSiteLineEdit import SelectSite
 from libs.AutoSuggestTextEdit import SuggestTextEdit
+from libs.GlobalVariables import GlobalState
 from libs.GetUser import get_login_user
 
 
@@ -143,4 +144,5 @@ class EditHistoryDialog(QDialog):
             self.comment.toPlainText()
         ]
         print("OK Clicked: ", data_array)
+        GlobalState.made_changes = True
         self.accept()

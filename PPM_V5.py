@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QStackedWidget, QFrame, QLabel, QMessageBox
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QStackedWidget, QFrame, QLabel, QMessageBox, QPushButton
 )
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.QtCore import Qt, QTimer
@@ -24,6 +24,7 @@ from libs.NotificationManager import NotificationManager
 from libs.LoginForm import LoginDialog
 from libs.About import AboutDialog
 from libs.DataGraphing import DataGraphing
+from libs.LoadingScreen import LoadingScreen
 
 
 class PogoPinMonitoring(QMainWindow):
@@ -183,10 +184,10 @@ class PogoPinMonitoring(QMainWindow):
 
     def update_theme(self, value: int):
         if value == 100:
-            apply_stylesheet(self, "THEME/dark.qss")
+            apply_stylesheet(self, ':/resources/dark.qss')
             self.slider_switch.setEnabled(True)
         elif value == 0:
-            apply_stylesheet(self, "THEME/light.qss")
+            apply_stylesheet(self, ':/resources/light.qss')
             self.slider_switch.setEnabled(True)
         else:
             self.slider_switch.setEnabled(False)
@@ -248,27 +249,29 @@ class PogoPinMonitoring(QMainWindow):
                 print(f"WARNING: The directory {directory_path} does not exist.")
 
     def backup_data(self):
-        #delete old week backup ar -ofer folder
-        if GlobalState.made_changes: # do backup and delete when changes made
-            self.delete_old_files_in_directory()
-            # Define the paths
-            newname = datetime.datetime.now().strftime("%Y-%m-%d")
-            source_path = GlobalState.database_path  # Replace with the actual path of your .db file
-            backup_directory = GlobalState.backup_directory_path
-            
-            for i, directory in enumerate(backup_directory):
-                # Create the backup directory if it doesn't exist
-                if not os.path.exists(directory):
-                    os.makedirs(directory, exist_ok=True)
-                    
-                    # Construct the target path for the backup
-                    base_name = os.path.basename(source_path)
-                    newnamebackup = f'{newname}_{base_name}' if i == 1 else base_name
-                    backup_path = os.path.join(directory, newnamebackup)
-                    
-                    # Copy the file
-                    shutil.copy(source_path, backup_path)
-                    print(f'Backup created at: {backup_path}')
+        if not GlobalState.made_changes:
+            return
+        self.delete_old_files_in_directory()
+        newname = datetime.datetime.now().strftime("%Y-%m-%d")
+        source_path = os.path.join(GlobalState.database_path, "POGOINSERTION.db")
+        backup_directory = GlobalState.backup_directory_path
+        print(backup_directory)
+
+        for i, directory in enumerate(backup_directory):
+            # Make sure the directory exists
+            if not os.path.exists(directory):
+                os.makedirs(directory, exist_ok=True)
+
+            # Construct the target path for the backup
+            base_name = os.path.basename(source_path)
+            newnamebackup = f'{newname}_{base_name}' if i == 1 else base_name
+            backup_path = os.path.join(directory, newnamebackup)
+
+            try:
+                shutil.copy(source_path, backup_path)
+                print(f'Backup created at: {backup_path}')
+            except Exception as e:
+                print(f'Failed to backup to {backup_path}: {e}')
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
@@ -282,14 +285,37 @@ class PogoPinMonitoring(QMainWindow):
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No
         )
+        self.backup_data()
         if reply == QMessageBox.StandardButton.Yes:
-            self.backup_data()
             event.accept()
         else:
             event.ignore()
 
+
+def main(ex : QWidget):
+    loading_screen = LoadingScreen()
+    loading_screen.show()
+
+    progress = 0
+    total_steps = 100
+    progress_step = 5
+
+    def update_progress():
+        nonlocal progress
+        if progress <= total_steps :
+            loading_screen.progress_bar.setValue(progress)
+            progress += progress_step
+        else:
+            loading_timer.stop()
+            loading_screen.close()
+            ex.show()
+
+    loading_timer = QTimer()
+    loading_timer.timeout.connect(update_progress)
+    loading_timer.start(50)  # Update progress every 50 milliseconds
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = PogoPinMonitoring()
-    window.show()
+    main(window)
     sys.exit(app.exec())

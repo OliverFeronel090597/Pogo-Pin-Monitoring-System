@@ -107,6 +107,7 @@ class DataGraphing(QWidget):
         super().__init__(parent)
         self.database = DatabaseConnector()
         self.current_graph_canvas = None
+        self.main_parent = parent
         self.init_ui()
 
     def init_ui(self):
@@ -151,6 +152,7 @@ class DataGraphing(QWidget):
         return text.split(" - ")
 
     def generate_graph(self):
+        self.main_parent.show_notification("Data loading please wait.")
         self.remove_graph()
         start_date, end_date = self.load_by_date()
         if not start_date or not end_date:
@@ -172,6 +174,42 @@ class DataGraphing(QWidget):
         self.thread.finished.connect(self.thread.deleteLater)
 
         self.thread.start()
+
+    def on_graph_ready(self, result):
+        categories = result["categories"]
+        if len(categories) > 30:
+            response = QMessageBox.question(
+                self,
+                "Too Much Data",
+                f"Detected {len(categories)} data points. Show only the last 30?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            )
+            if response == QMessageBox.StandardButton.Yes:
+                for key in ["categories", "bar_data", "line_data"]:
+                    result[key] = result[key][-30:]
+            else:
+                return
+
+        if result["categories"]:
+            self.plot_window = GraphData(
+                result["categories"],
+                result["bar_data"],
+                result["line_data"],
+                result["right_label"],
+                result["left_label"],
+                result["top_label"],
+                result["bottom_label"]
+            )
+            self.plot_window.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+            self.plot_window.customContextMenuRequested.connect(self.show_context_menu)
+            self.current_graph_canvas = self.plot_window.canvas
+            self.graph_layout.addWidget(self.plot_window)
+        else:
+            QMessageBox.information(self, "No Data", "No data found for the selected filters.")
+
+    def on_graph_error(self, message):
+        QMessageBox.critical(self, "Graph Error", f"An error occurred:\n{message}")
+
 
     def show_context_menu(self, point):
         menu = QMenu(self)

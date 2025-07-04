@@ -144,5 +144,16 @@ class EditHistoryDialog(QDialog):
             self.comment.toPlainText()
         ]
         print("OK Clicked: ", data_array)
+        self.database.update_history(
+            self.bhw_name.text(),
+            self.date_replaced.text(),
+            self.run_count.text(),
+            self.sap_input.currentText(),
+            self.pogo_pin_use.text(),
+            self.total_price.text(),
+            self.select_site.text(),
+            self.login_user.text(),
+            self.comment.toPlainText()
+        )
         GlobalState.made_changes = True
         self.accept()

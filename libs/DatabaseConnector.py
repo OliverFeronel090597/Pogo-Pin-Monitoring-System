@@ -313,6 +313,18 @@ class DatabaseConnector:
         query = 'INSERT INTO POGOINSERTION (BHWName, DateReplaced, RunCount, SapNumber, QtyOfPogo, PogoPrice, Site, ReplaceBy, Remarks) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
         self.execute_query(query, (bhw_name, date_replaced, run_count, sap_number, qty_of_pogo, price, site, replace_by, remarks))
 
+    def update_history(self, bhw_name, date_replaced, run_count, sap_number, qty_of_pogo, price, site, replace_by, remarks):
+        '''Update a history record for an existing BHW'''
+        query = '''
+            UPDATE POGOINSERTION
+            SET DateReplaced = ?, RunCount = ?, SapNumber = ?, QtyOfPogo = ?, PogoPrice = ?, Site = ?, ReplaceBy = ?, Remarks = ?
+            WHERE BHWName = ?
+        '''
+        self.execute_query(query, (
+            date_replaced, run_count, sap_number, qty_of_pogo, price, site, replace_by, remarks, bhw_name
+        ))
+
+
     def get_all_history(self, limit):
         """Get all history data"""
         return self.execute_query(query=f"SELECT * FROM POGOINSERTION ORDER BY ID DESC LIMIT {limit}", 

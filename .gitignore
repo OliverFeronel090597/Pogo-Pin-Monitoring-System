@@ -9,6 +9,7 @@ __pycache__/
 
 # SQL database
 *.db
+*.exe
 
 # Distribution / packaging
 .Python

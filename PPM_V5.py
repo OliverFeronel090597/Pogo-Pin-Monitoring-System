@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QStackedWidget, QFrame, QLabel, QMessageBox, QPushButton
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QStackedWidget, QFrame, QLabel, QMessageBox
 )
 from PyQt6.QtGui import QAction, QIcon
 from PyQt6.QtCore import Qt, QTimer
@@ -26,19 +26,20 @@ from libs.About import AboutDialog
 from libs.DataGraphing import DataGraphing
 from libs.LoadingScreen import LoadingScreen
 
-
 class PogoPinMonitoring(QMainWindow):
     def __init__(self):
         super().__init__()
         self.database = DatabaseConnector()
         self.database.create_tables_if_not_exist()
+        # self.database.insert_e100_user("E1002585", "QUEEN")
+        # print(self.database.get_user("E1002585"))
 
+
+        apply_stylesheet(self, "icon/light.qss" if self.database.get_theme(get_login_user()) == "light" else "icon/dark.qss")#":/resources/light.qss")
         self._init_modules()
         self._init_ui()
         self._create_menu()
         self._create_taskbar()
-
-        apply_stylesheet(self, ":/resources/light.qss")
 
     def _init_modules(self):
         self.slider_switch = ToggleSlider(parent=self)
@@ -109,6 +110,11 @@ class PogoPinMonitoring(QMainWindow):
         self.mode_layout.addWidget(self.slider_switch)
 
         self.slider_switch.valueChanged.connect(self.update_theme)
+
+    def _fix_username(self):
+        user = get_login_user()
+        if user.startswith("E100") and not self.database.get_user(user):
+            self.fix_user.exec()
 
     def _create_separator(self):
         line = QFrame()
@@ -184,10 +190,10 @@ class PogoPinMonitoring(QMainWindow):
 
     def update_theme(self, value: int):
         if value == 100:
-            apply_stylesheet(self, ':/resources/dark.qss')
+            apply_stylesheet(self, 'icon/dark.qss')
             self.slider_switch.setEnabled(True)
         elif value == 0:
-            apply_stylesheet(self, ':/resources/light.qss')
+            apply_stylesheet(self, 'icon/light.qss')
             self.slider_switch.setEnabled(True)
         else:
             self.slider_switch.setEnabled(False)
@@ -298,7 +304,7 @@ def main(ex : QWidget):
 
     progress = 0
     total_steps = 100
-    progress_step = 5
+    progress_step = 1
 
     def update_progress():
         nonlocal progress
@@ -317,5 +323,6 @@ def main(ex : QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = PogoPinMonitoring()
-    main(window)
+    window.show()
+    #main(window)
     sys.exit(app.exec())

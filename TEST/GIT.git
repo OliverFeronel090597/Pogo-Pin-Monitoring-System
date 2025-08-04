@@ -20,3 +20,48 @@ git status
 
 
 Remove-Item -Recurse -Force .git -- remove current repo
+
+
+🧠 Git Quick Reference (1-Page Cheat Sheet)
+🔧 Basic Workflow
+
+git init                                 # Start a new Git repository
+git add .                                # Stage all files for commit
+git commit -m "Initial commit"           # Commit staged files with message
+git branch -M main                       # Rename current branch to 'main'
+git remote add origin <repo-url>        # Link local repo to GitHub
+git push -u origin main                  # Push to remote & set upstream
+
+git status                               # Show status of changes
+git log --oneline                        # Short summary of commit history
+git branch                               # List local branches
+git checkout -b new-branch               # Create & switch to new branch
+git checkout main                        # Switch back to 'main' branch
+git merge new-branch                     # Merge new-branch into current branch
+
+git pull origin main                     # Pull latest from remote main
+git pull origin main --allow-unrelated-histories   # Pull from unrelated repo (force merge)
+git push origin main                     # Push local main to remote
+
+git remote -v                            # Show remote repo URLs
+git remote show origin                   # Details of remote 'origin'
+git config --list                        # Show Git config settings
+git rev-parse --show-toplevel            # Show root directory of repo
+
+git add <file>                           # Stage specific file
+git restore <file>                       # Discard local changes in file
+git diff                                 # Show unstaged changes
+git diff --cached                        # Show staged changes
+git reset HEAD <file>                    # Unstage a file
+git commit --amend                       # Edit last commit (e.g., fix message)
+git reset --soft HEAD~1                  # Undo last commit, keep changes
+git checkout -- <file>                   # Revert file to last committed state
+
+git tag v1.0                             # Create a simple tag
+git tag -a v1.0 -m "Version 1.0"         # Create annotated tag with message
+git push origin --tags                   # Push all tags to remote
+
+git clean -fd                            # Delete untracked files/folders
+git reset --hard HEAD                    # Discard all local changes
+rm -rf .git                              # Remove Git repo (Linux/macOS)
+Remove-Item -Recurse -Force .git         # Remove Git repo (Windows PowerShell)

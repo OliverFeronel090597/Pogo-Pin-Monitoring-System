@@ -1,10 +1,7 @@
-import sys
 import numpy as np
 import matplotlib.pyplot as plt
-from PyQt6.QtWidgets import QApplication, QVBoxLayout, QWidget, QMenu
-from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QApplication, QVBoxLayout, QWidget
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-
 
 class GraphData(QWidget):
     def __init__(self, categories, bar_data, line_data, right_label, left_label, 
@@ -29,6 +26,8 @@ class GraphData(QWidget):
         # Create layout and figure
         layout = QVBoxLayout(self)
         self.figure, self.ax1 = plt.subplots(figsize=(12, 9))
+        self.figure.patch.set_facecolor("#A1A1A1")  # background of figure
+        self.ax1.set_facecolor("#A1A1A1")           # background of plot axes
         self.canvas = FigureCanvas(self.figure)
         layout.addWidget(self.canvas)
         
@@ -80,8 +79,10 @@ class GraphData(QWidget):
                 f'{int(height)}',
                 ha='center',
                 va='bottom',
-                color=bar.get_facecolor()
-            )
+                color="black", # bar.get_facecolor(),
+                fontsize=9  # 👈 add this
+    )
+
 
     def _create_line_chart(self, categories, line_data):
         """Create the line chart component."""
@@ -91,7 +92,8 @@ class GraphData(QWidget):
             line_data, 
             color='red', 
             marker='o', 
-            label='Total Price in EURO'
+            label='Total Price in EURO',
+            alpha=0.6  # 👈 Add opacity here (0 = transparent, 1 = solid)
         )
         self.ax2.set_ylabel(self.labels['right'])
         
@@ -101,10 +103,12 @@ class GraphData(QWidget):
                 self.x_positions[i], 
                 value, 
                 f'{value:.2f}', 
-                color=self.line_plot.get_color(), 
+                color="black", #self.line_plot.get_color(), 
                 ha='center', 
-                va='bottom'
+                va='bottom',
+                fontsize=9  # 👈 add this
             )
+
         
         # Add legend with click functionality
         self._setup_legend()
@@ -162,7 +166,7 @@ class GraphData(QWidget):
             transform=self.ax1.transAxes, 
             ha='center', 
             va='center', 
-            fontsize=12, 
+            fontsize=8, 
             color='black',
             bbox=dict(facecolor='white', edgecolor='none', alpha=0.7)
         )

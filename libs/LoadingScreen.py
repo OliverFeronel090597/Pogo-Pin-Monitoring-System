@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QProgressBar
-from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
 
 # from libs.CenterWindow import MoveToCenter
@@ -56,24 +56,45 @@ class LoadingScreen(QWidget):
         
         # Progress bar setup
         self.progress_bar = QProgressBar()
-        self.progress_bar.setStyleSheet("""
-            QProgressBar {
-                color: black;
-                border: 2px solid #3b5998;
-                border-radius: 5px;
-                background-color: #f3f3f3;
-                text-align: center;
-            }
-            QProgressBar::chunk {
-                background-color: #3b5998;
-                width: 100px;
-            }
-        """)
 
         # Add layouts and widgets to the main layout
         main_layout.addWidget(self.progress_bar)
 
         self.setLayout(main_layout)
+
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #ffffff;
+                color: #000000;
+                font-family: 'Segoe UI', sans-serif;
+                font-size: 14px;
+            }
+
+            QLabel {
+                color: #333333;
+            }
+
+            QLabel, QLabel {
+                font-weight: bold;
+                font-size: 15px;
+            }
+
+            QProgressBar {
+                border: 1px solid #c0c0c0;
+                border-radius: 5px;
+                background-color: #f3f3f3;
+                text-align: center;
+                height: 20px;
+            }
+
+            QProgressBar::chunk {
+                background-color: #4CAF50;  /* smooth green fill */
+                border-radius: 5px;
+            }
+
+        """)
+
+
 
     # def center_on_screen(self):
     #     screen_geometry = QApplication.primaryScreen().availableGeometry()

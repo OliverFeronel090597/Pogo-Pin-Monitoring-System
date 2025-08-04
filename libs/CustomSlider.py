@@ -2,6 +2,8 @@ from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSlider, QLabel
 from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve
 import sys
 
+from libs.DatabaseConnector import DatabaseConnector
+from libs.GetUser import get_login_user
 
 class ToggleSlider(QSlider):
     def __init__(self, parent=None):
@@ -9,9 +11,8 @@ class ToggleSlider(QSlider):
         self.setRange(0, 100)
         self.setFixedSize(60, 50)
         self.setCursor(Qt.CursorShape.OpenHandCursor)
-        self.setValue(0)
         self.is_on = False
-
+        self.database = DatabaseConnector()
         self._animation = QPropertyAnimation(self, b"value", self)
         self._animation.setDuration(400)
         self._animation.setEasingCurve(QEasingCurve.Type.InOutQuad)
@@ -20,6 +21,13 @@ class ToggleSlider(QSlider):
         self.moon_icon = r"C:/Users/O.Feronel/OneDrive - ams OSRAM/Documents/PYTHON/PPM_V5/icon/darkMode.png"
 
         self.setStyleSheet(self._style(off=True))
+
+        if self.database.get_theme(get_login_user()) == "light":
+            self.setValue(0)
+        else:
+            self.setValue(100)
+            
+
 
     def mousePressEvent(self, event):
         self.toggle()
@@ -33,6 +41,7 @@ class ToggleSlider(QSlider):
         self._animation.setStartValue(self.value())
         self._animation.setEndValue(end_value)
         self._animation.start()
+        self.database.insert_theme(get_login_user(), "light" if not end_value else "dark")
 
     def _style(self, off=True):
         groove_base = "#f8ee5c" if off else "#444444"

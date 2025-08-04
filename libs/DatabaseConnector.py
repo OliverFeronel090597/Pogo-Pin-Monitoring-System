@@ -83,7 +83,8 @@ class DatabaseConnector:
             ],
             "CREDENTIALS": [
                 "user TEXT UNIQUE",
-                "password TEXT"
+                "password TEXT",
+                "level TEXT"
             ],
             "SAPNUMBER": [
                 "SAPNumber TEXT",
@@ -108,6 +109,14 @@ class DatabaseConnector:
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT",
                 "DATE TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP",  # Automatically stores the current date and time
                 "DETAILS TEXT NOT NULL",  # Title of the announcement
+            ],
+            "E100_USER": [
+                "E100 TEXT UNIQUE",
+                "USER TEXT"
+            ],
+            "THEME": [
+                "USER TEXT UNIQUE",
+                "MODE TEXT"
             ]
         }
 
@@ -241,10 +250,10 @@ class DatabaseConnector:
     #####                           LOGIN QUERY                              #####
     ##############################################################################
 
-    def add_user(self, user, hashed_password):
+    def add_user(self, user, hashed_password, level):
         '''Add a new user to the credentials table'''
         query = "INSERT INTO credentials (user, password) VALUES (?, ?)"
-        params = (user, hashed_password)
+        params = (user, hashed_password, level)
         self.execute_query(query, params)
 
     def update_password(self, user, hashed_password):
@@ -445,4 +454,42 @@ class DatabaseConnector:
         result = self.execute_query(query="SELECT VERSION FROM OLD_VERSION WHERE VERSION = ? ", params=(curr_version,), fetch_one=True)
         return False if not result else True
           
+    ##############################################################################
+    #####                           USER   QUERY                            #####
+    ##############################################################################
+        # "E100_USER": [
+        #         "E100 TEXT UNIQUE",
+        #         "USER TEXT"
+        #     ]
+    def insert_e100_user(self, e100, username):
+        query = "INSERT OR REPLACE INTO E100_USER (E100, USER) VALUES (?, ?)"
+        params = (e100, username)
+        self.execute_query(query, params)
 
+
+    def get_user(self, e100):
+        print(e100)
+        query = "SELECT USER FROM E100_USER WHERE E100 = ?"
+        params = (e100,)
+        result = self.execute_query(query, params, fetch_all=True)
+        return result[0][0] if result else None
+
+
+    ##############################################################################
+    #####                           THEME   QUERY                            #####
+    ##############################################################################
+    # "THEME": [
+    #     "USER TEXT UNIQUE",
+    #     "MODE TEXT"
+    #        ]
+    
+    def insert_theme(self, user, theme):
+        query = "INSERT OR REPLACE INTO THEME (USER, MODE) VALUES (?, ?)"
+        params = (user, theme)
+        self.execute_query(query, params)
+
+    def get_theme(self, user):
+        query = "SELECT MODE FROM THEME WHERE USER = ?"
+        params = (user ,)
+        result = self.execute_query(query, params, fetch_all=True)
+        return result[0][0] if result else None

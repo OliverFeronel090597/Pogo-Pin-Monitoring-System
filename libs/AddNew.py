@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QSpacerItem, QLabel, QFormLayout, QSpinBox, QPushButton, QApplication, QMessageBox
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon
 
 from libs.ImageLabel import ImageLabel
 from libs.CompleterLineEdit import CompleterLineEdit
@@ -14,6 +15,8 @@ from libs.AutoSuggestTextEdit import SuggestTextEdit
 from libs.Mailer import MailerThread
 from libs.GetUser import get_login_user
 from libs.GlobalVariables import GlobalState
+from libs.FixE100User import FixUser
+from libs.AddNewBHW import AddNewHBW
 
 class AddNew(QWidget):
     def __init__(self, parent: QMainWindow):
@@ -23,6 +26,8 @@ class AddNew(QWidget):
         self.pogo_price = 0
 
         self.database = DatabaseConnector()
+        self.fix_user = FixUser(parent=self)
+        self.add_new_bhw = AddNewHBW(self)
         
         self.main_layout = QHBoxLayout(self)
         self.main_layout.setContentsMargins(20, 20, 20, 20)  # Added margins
@@ -38,10 +43,20 @@ class AddNew(QWidget):
         self.form_layout.setContentsMargins(0, 0, 0, 0)
         self.form_layout.setSpacing(15)
 
+        self.add_hbw = QPushButton()
+        self.add_hbw.setIcon(QIcon("icon\Add.png"))
+        self.add_hbw.setProperty("role", "addButton")
+        self.add_hbw.setToolTip("Add BHW")
+        self.add_hbw.clicked.connect(self.add_new_bhw_form)
+        self.add_hbw.setMaximumSize(30, 30)
+
         # Add form title
         form_title = QLabel("Loadboard Maintenance Form")
         form_title.setProperty("role", "formTitle")
         form_title.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        form_title.setMaximumHeight(30)
+
+        self.form_layout.addWidget(self.add_hbw)
         self.form_layout.addWidget(form_title)
 
         form_layout = QFormLayout()
@@ -77,9 +92,18 @@ class AddNew(QWidget):
 
         self.login_user = NumCharLineEdit(allow_numbers_only=False, width=300, parent=self)
         self.login_user.textChanged.connect(self.uppercase_login_user)
-        self.login_user.setText(get_login_user())
-        item = self.database.get_convert_history()
 
+        # if user is e100 fix it
+        user = get_login_user()
+        if user.startswith("E10"):
+            new_user = self.database.get_user(user)
+            if new_user:
+                user = new_user
+
+
+        self.login_user.setText(user)
+            
+        item = self.database.get_convert_history()
         self.comment = SuggestTextEdit(300, 100, item, parent=self)
 
         # Helper function to add row and set label property
@@ -201,7 +225,16 @@ class AddNew(QWidget):
         spacer = QSpacerItem(0, 0, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         self.logo_layout.addSpacerItem(spacer)
 
+    def update_username(self, text):
+        self.login_user.setText(text)
+
     def save_data(self):
+
+        set_user = self.login_user.text()
+        if set_user.startswith("E10"):
+            self.fix_user.exec()
+            return
+
         QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
 
         fields = {
@@ -280,6 +313,9 @@ class AddNew(QWidget):
         self.main_parent.show_notification(result)
         GlobalState.made_changes = True
         print(result)
+
+    def add_new_bhw_form(self):
+        self.add_new_bhw.exec()
 
     def resizeEvent(self, event):
         new_width = int(self.width() / 1.5)

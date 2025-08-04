@@ -1,15 +1,16 @@
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QMenu, QApplication, QMessageBox
 )
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QObject, QThread, pyqtSignal, QSize
 from PyQt6.QtGui import QAction, QClipboard, QImage
 from io import BytesIO
 from libs.CalendarLineEdit import DateRangeLineEdit
 from libs.CustomComboBox import CustomDropdown
 from libs.GraphData import GraphData
 from libs.DatabaseConnector import DatabaseConnector
+from libs.CustomSpinBox import CustomSpinBox
+from libs.RandomWave import RandomWave
 
-from PyQt6.QtCore import QObject, QThread, pyqtSignal
 
 class GraphWorker(QObject):
     finished = pyqtSignal(dict)
@@ -106,35 +107,48 @@ class DataGraphing(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.database = DatabaseConnector()
+        self.random_wave = RandomWave()
         self.current_graph_canvas = None
         self.main_parent = parent
         self.init_ui()
 
     def init_ui(self):
         main_layout = QVBoxLayout(self)
-        self.graph_layout = QVBoxLayout()
-        main_layout.addLayout(self.graph_layout)
+        main_layout.setContentsMargins(0, 0, 0, 0)  # Remove margins for better space utilization
+        
+        # Create a container widget for the graph area
+        self.graph_container = QWidget()
+        self.graph_container.setProperty("role", "graphContainer")
+        self.graph_layout = QVBoxLayout(self.graph_container)
+        self.graph_layout.setContentsMargins(0, 0, 0, 0)
+        self.graph_layout.addWidget(self.random_wave)
+        
+        main_layout.addWidget(self.graph_container, stretch=1)  # Add stretch to use available space
 
         control_layout = QHBoxLayout()
         control_layout.setAlignment(Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignCenter)
+
         main_layout.addLayout(control_layout)
 
-        def add_labeled_widget(label_text, widget):
+        def add_labeled_widget(label_text, widget: QWidget):
             label = QLabel(label_text)
             label.setProperty("role", "dataGraph")
             label.setMaximumWidth(len(label_text) * 10)
             widget.setProperty("role", "dataGraph")
             control_layout.addWidget(label)
             control_layout.addWidget(widget)
+        
+        self.graph_limit = CustomSpinBox(width=100, value=10, parent=self)
+        add_labeled_widget("Limit :", self.graph_limit)
 
         self.data_range = DateRangeLineEdit(width=200, func=self.load_by_date, date_now=True, parent=self)
         add_labeled_widget("Timeframe :", self.data_range)
 
         sap_list = self.database.get_sap_number()
-        self.sap_input = CustomDropdown(sap_list, 200, parent=self)
+        self.sap_input = CustomDropdown(sap_list, 100, parent=self)
         add_labeled_widget("SAP No. :", self.sap_input)
 
-        self.function_select = CustomDropdown(["BHW Serial", "SAP Number", "SAP Contributor"], 200, parent=self)
+        self.function_select = CustomDropdown(["BHW Serial", "SAP Number", "SAP Contributor"], 150, parent=self)
         add_labeled_widget("Function :", self.function_select)
 
         self.generate_plot = QPushButton("Generate")
@@ -176,19 +190,13 @@ class DataGraphing(QWidget):
         self.thread.start()
 
     def on_graph_ready(self, result):
-        categories = result["categories"]
-        if len(categories) > 30:
-            response = QMessageBox.question(
-                self,
-                "Too Much Data",
-                f"Detected {len(categories)} data points. Show only the last 30?",
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
-            )
-            if response == QMessageBox.StandardButton.Yes:
-                for key in ["categories", "bar_data", "line_data"]:
-                    result[key] = result[key][-30:]
-            else:
-                return
+        try:
+            limit = int(self.graph_limit.value())
+        except ValueError:
+            limit = 30  # default fallback if input is invalid
+
+        for key in ["categories", "bar_data", "line_data"]:
+            result[key] = result[key][-limit:]
 
         if result["categories"]:
             self.plot_window = GraphData(
@@ -203,13 +211,19 @@ class DataGraphing(QWidget):
             self.plot_window.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
             self.plot_window.customContextMenuRequested.connect(self.show_context_menu)
             self.current_graph_canvas = self.plot_window.canvas
+            
+            # Remove existing widgets from the graph layout
+            while self.graph_layout.count():
+                item = self.graph_layout.takeAt(0)
+                if item.widget():
+                    item.widget().deleteLater()
+            
             self.graph_layout.addWidget(self.plot_window)
         else:
             QMessageBox.information(self, "No Data", "No data found for the selected filters.")
 
     def on_graph_error(self, message):
         QMessageBox.critical(self, "Graph Error", f"An error occurred:\n{message}")
-
 
     def show_context_menu(self, point):
         menu = QMenu(self)
@@ -225,7 +239,24 @@ class DataGraphing(QWidget):
         QApplication.clipboard().setImage(image, QClipboard.Mode.Clipboard)
 
     def remove_graph(self):
+        if hasattr(self, 'random_wave') and self.random_wave:
+            self.graph_layout.removeWidget(self.random_wave)
+            self.random_wave.cleanup()
+            self.random_wave.deleteLater()
+            self.random_wave = None  # ✅ prevent using a deleted object
+
         if self.current_graph_canvas:
             self.graph_layout.removeWidget(self.plot_window)
             self.plot_window.deleteLater()
             self.current_graph_canvas = None
+        else:
+            # Ensure the layout is clean
+            while self.graph_layout.count():
+                item = self.graph_layout.takeAt(0)
+                if item.widget():
+                    item.widget().deleteLater()
+
+            # ✅ Only add random_wave if it still exists
+            if self.random_wave:
+                self.graph_layout.addWidget(self.random_wave)
+

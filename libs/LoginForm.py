@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import (
     QDialog, QLineEdit, QLabel,
     QPushButton, QVBoxLayout, QHBoxLayout,
-    QMessageBox
+    QMessageBox, QRadioButton
 )
 from PyQt6.QtGui import QIcon
 from libs.DatabaseConnector import DatabaseConnector
@@ -55,6 +55,12 @@ class LoginDialog(QDialog):
         self.confirm_input.hide()
         self.confirm_label.hide()
         self.confirm_input.setProperty("role", "loginForm")
+        
+        self.admin_level_latout = QHBoxLayout()
+        self.admin_level1 = QRadioButton("1")
+        self.admin_level2 = QRadioButton("2")
+        self.admin_level3 = QRadioButton("3")
+
 
         # Buttons
         self.action_button = QPushButton()

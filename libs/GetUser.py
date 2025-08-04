@@ -1,10 +1,12 @@
-import psutil
+import ctypes
 
 def get_login_user():
-    users = psutil.users()
-    if users and not users[0].name.startswith("E100"):
-        return users[0].name  # First logged-in user's name
-    return None
+    NameDisplay = 3
+    GetUserNameEx = ctypes.windll.secur32.GetUserNameExW
+    size = ctypes.pointer(ctypes.c_ulong(0))
+    GetUserNameEx(NameDisplay, None, size)
 
-# # Example usage
-# print("Logged-in user:", get_login_user())
+    buffer = ctypes.create_unicode_buffer(size.contents.value)
+    GetUserNameEx(NameDisplay, buffer, size)
+    full_name = str(buffer.value).split(" ")
+    return f"{full_name[0][0]}.{full_name[-1]}"

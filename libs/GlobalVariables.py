@@ -1,7 +1,7 @@
 # GlobalVarialbles.py
 
 class GlobalState:
-    app_version = "5.0.0"
+    app_version = "5.1.0"
     admin_access = False
     made_changes = False
     log_file_path = rf"\\fsph01\Public\AMS_PHI\12_OPERATIONS\TEST_PRODUCT_ENGINEERING\TPE-Loadboard-Probeshop_Sustaining\Tools\LoadBoardMonitoring\DATA\restriction_logs\error_log.txt"          # Set up exception handling location

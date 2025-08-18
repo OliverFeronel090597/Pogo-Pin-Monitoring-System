@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QSpacerItem, QLabel, QFormLayout, QSpinBox, QPushButton, QApplication, QMessageBox
+from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QSpacerItem, QLabel, QFormLayout, QSpinBox,\
+     QPushButton, QApplication, QMessageBox, QDialog
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 
@@ -44,7 +45,7 @@ class AddNew(QWidget):
         self.form_layout.setSpacing(15)
 
         self.add_hbw = QPushButton()
-        self.add_hbw.setIcon(QIcon("icon\Add.png"))
+        self.add_hbw.setIcon(QIcon(":/resources/Add.png"))
         self.add_hbw.setProperty("role", "addButton")
         self.add_hbw.setToolTip("Add BHW")
         self.add_hbw.clicked.connect(self.add_new_bhw_form)
@@ -315,7 +316,11 @@ class AddNew(QWidget):
         print(result)
 
     def add_new_bhw_form(self):
-        self.add_new_bhw.exec()
+        if self.add_new_bhw.exec() == QDialog.DialogCode.Accepted:
+            lb = self.add_new_bhw.get_value()
+            self.database.insert_loadboard(lb)
+            print(lb)
+
 
     def resizeEvent(self, event):
         new_width = int(self.width() / 1.5)

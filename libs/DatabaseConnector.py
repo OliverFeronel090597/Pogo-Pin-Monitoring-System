@@ -200,7 +200,10 @@ class DatabaseConnector:
         return [row[0] for row in result] if result else []
 
         
-
+    def insert_loadboard(self, lb):
+        query = "INSERT INTO LOADBOARDS (LOADBOARDS) VALUES (?)"
+        params = (lb,)
+        self.execute_query(query, params)
 
     ##############################################################################
     #####                           SAP QUERY                                #####

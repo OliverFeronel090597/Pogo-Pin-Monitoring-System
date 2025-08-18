@@ -1,26 +1,31 @@
 from PyQt6.QtWidgets import QDialog, QLineEdit, QVBoxLayout, QPushButton
+from libs.DatabaseConnector import DatabaseConnector
 
 class AddNewHBW(QDialog):
-    def __init__(self, parent):
+    def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("New BHW")
         self.setFixedSize(200, 100)
 
-        layout = QVBoxLayout()
+        self.database = DatabaseConnector()
         
-        new_bhw = QLineEdit()
-        new_bhw.setProperty("role", "saveBHW")
-        new_bhw.textChanged.connect(self.capitalize)
+        layout = QVBoxLayout()
+
+        self.new_bhw = QLineEdit()
+        self.new_bhw.setProperty("role", "saveBHW")
+        self.new_bhw.textChanged.connect(self.capitalize)
 
         save_bhw = QPushButton("Save")
         save_bhw.setProperty("role", "saveBHW")
+        save_bhw.clicked.connect(self.accept)  # Triggers dialog to close and return Accepted
 
-
-
-        layout.addWidget(new_bhw)
+        layout.addWidget(self.new_bhw)
         layout.addWidget(save_bhw)
         self.setLayout(layout)
-        
+
     def capitalize(self):
         sender = self.sender()
         sender.setText(sender.text().upper())
+
+    def get_value(self):
+        return self.new_bhw.text()

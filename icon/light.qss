@@ -438,6 +438,40 @@ QPushButton[role="addButton"]:hover {
     background-color: #2980b9;
 }
 
+QPushButton[role="addButton"] {
+    background-color: #2980b9;  /* Darker solid blue */
+    color: white;
+    font-size: 20px;
+    font-weight: 700;           /* Extra bold */
+    border-radius: 10px;
+    padding: 2px 2px;
+    border: 2px solid #1B4F72;  /* Solid border for strong outline */
+}
+
+QPushButton[role="saveBHW"] {
+    background-color: #2980b9;  /* Darker solid blue */
+    color: white;
+    font-size: 15px;
+    font-weight: 700;           /* Extra bold */
+    border-radius: 10px;
+    padding: 2px 2px;
+    border: 2px solid #1B4F72;  /* Solid border for strong outline */
+}
+
+QPushButton[role="saveBHW"]:hover,{
+    background-color: #2980b9;
+}
+
+QLineEdit[role="saveBHW"] {
+    background-color: #353535;
+    border: 1px solid #555;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Segoe UI';
+    padding: 6px;
+    color: #ECF0F1;
+}
+
 /*  ##############################################################################
     #####                           SAP and History                          #####
     ############################################################################## */

@@ -9,11 +9,11 @@ import time
 import os
 import shutil
 
-
 from libs.resources import *
 from libs.DatabaseConnector import DatabaseConnector
 from libs.StyleUtils import apply_stylesheet
 from libs.GetUser import get_login_user
+from libs.GetPathsAccordingly import get_path
 from libs.GlobalVariables import GlobalState
 from libs.ControlButtons import ControlButton
 from libs.CustomSlider import ToggleSlider
@@ -30,12 +30,12 @@ class PogoPinMonitoring(QMainWindow):
     def __init__(self):
         super().__init__()
         self.database = DatabaseConnector()
-        self.database.create_tables_if_not_exist()
+        #self.database.create_tables_if_not_exist()
         # self.database.insert_e100_user("E1002585", "QUEEN")
         # print(self.database.get_user("E1002585"))
 
 
-        apply_stylesheet(self, "icon/light.qss" if self.database.get_theme(get_login_user()) == "light" else "icon/dark.qss")#":/resources/light.qss")
+        apply_stylesheet(self, ":/resources/light.qss" if self.database.get_theme(get_login_user()) == "light" else ":/resources/light.qss")
         self._init_modules()
         self._init_ui()
         self._create_menu()
@@ -52,8 +52,8 @@ class PogoPinMonitoring(QMainWindow):
     def _init_ui(self):
         self.setWindowTitle("Pogo Pin Monitoring BETA")
         self.setWindowIcon(QIcon(":/resources/main-logo.png"))
-        self.setMinimumSize(1100, 780)
-        self.resize(1000, 780)
+        self.setMinimumSize(1100, 790)
+        self.resize(1000, 790)
 
         self.main_widget = QWidget()
         self.setCentralWidget(self.main_widget)
@@ -190,10 +190,10 @@ class PogoPinMonitoring(QMainWindow):
 
     def update_theme(self, value: int):
         if value == 100:
-            apply_stylesheet(self, 'icon/dark.qss')
+            apply_stylesheet(self, ':/resources/dark.qss')
             self.slider_switch.setEnabled(True)
         elif value == 0:
-            apply_stylesheet(self, 'icon/light.qss')
+            apply_stylesheet(self, ':/resources/light.qss')
             self.slider_switch.setEnabled(True)
         else:
             self.slider_switch.setEnabled(False)

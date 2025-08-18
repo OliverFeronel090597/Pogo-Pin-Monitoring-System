@@ -11,23 +11,24 @@ class ToggleSlider(QSlider):
         self.setRange(0, 100)
         self.setFixedSize(60, 50)
         self.setCursor(Qt.CursorShape.OpenHandCursor)
-        self.is_on = False
         self.database = DatabaseConnector()
         self._animation = QPropertyAnimation(self, b"value", self)
-        self._animation.setDuration(400)
+        self._animation.setDuration(600)
         self._animation.setEasingCurve(QEasingCurve.Type.InOutQuad)
 
         self.sun_icon = r"C:/Users/O.Feronel/OneDrive - ams OSRAM/Documents/PYTHON/PPM_V5/icon/lightMode.png"
         self.moon_icon = r"C:/Users/O.Feronel/OneDrive - ams OSRAM/Documents/PYTHON/PPM_V5/icon/darkMode.png"
 
-        self.setStyleSheet(self._style(off=True))
-
-        if self.database.get_theme(get_login_user()) == "light":
+        # Initialize theme based on DB value
+        user_theme = self.database.get_theme(get_login_user())
+        if user_theme == "light":
+            self.is_on = False
             self.setValue(0)
         else:
+            self.is_on = True
             self.setValue(100)
-            
 
+        self.setStyleSheet(self._style(off=not self.is_on))
 
     def mousePressEvent(self, event):
         self.toggle()
@@ -35,13 +36,20 @@ class ToggleSlider(QSlider):
 
     def toggle(self):
         self.is_on = not self.is_on
-        self.setStyleSheet(self._style(off=not self.is_on))
         end_value = 100 if self.is_on else 0
+
+        # Update stylesheet immediately
+        self.setStyleSheet(self._style(off=not self.is_on))
+
+        # Animate the handle
         self._animation.stop()
         self._animation.setStartValue(self.value())
         self._animation.setEndValue(end_value)
         self._animation.start()
-        self.database.insert_theme(get_login_user(), "light" if not end_value else "dark")
+
+        # Save the theme to DB
+        theme = "dark" if self.is_on else "light"
+        self.database.insert_theme(get_login_user(), theme)
 
     def _style(self, off=True):
         groove_base = "#f8ee5c" if off else "#444444"

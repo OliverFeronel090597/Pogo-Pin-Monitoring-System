@@ -47,7 +47,7 @@ class CalendarPopup(QDialog):
         self.setWindowFlags(Qt.WindowType.Popup)
         self.setFixedSize(300, 250)
 
-        self.lineedit = parent_lineedit
+        self.lineedit = parent_lineedit 
         self.calendar = SmartCalendar(self)
         self.calendar.set_min_date_by_keyword(min_keyword)
         self.calendar.set_max_date_by_keyword(max_keyword)

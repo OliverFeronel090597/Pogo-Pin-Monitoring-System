@@ -1,82 +1,82 @@
-import win32com.client as win32
-from PyQt6.QtCore import QThread, pyqtSignal
-from libs.DatabaseConnector import DatabaseConnector
+# import win32com.client as win32
+# from PyQt6.QtCore import QThread, pyqtSignal
+# from libs.DatabaseConnector import DatabaseConnector
 
 
-class MailerThread(QThread):
-    """
-    Threaded mail sender to prevent blocking the GUI.
-    Emits a signal when mailing is finished.
-    """
-    finish_mail = pyqtSignal(str)
+# class MailerThread(QThread):
+#     """
+#     Threaded mail sender to prevent blocking the GUI.
+#     Emits a signal when mailing is finished.
+#     """
+#     finish_mail = pyqtSignal(str)
 
-    def __init__(self, message: str, function: str, subject: str, parent=None):
-        super().__init__(parent)
-        self.mailer = Mailer()
-        self.message = message
-        self.function = function
-        self.subject = subject
+#     def __init__(self, message: str, function: str, subject: str, parent=None):
+#         super().__init__(parent)
+#         self.mailer = Mailer()
+#         self.message = message
+#         self.function = function
+#         self.subject = subject
 
-    def run(self) -> None:
-        try:
-            self.mailer.history_mail(self.message, self.function, self.subject)
-            self.finish_mail.emit("✅ Mail Sent Successfully.")
-        except Exception as e:
-            self.finish_mail.emit(f"❌ Mail Failed: {str(e)}")
+#     def run(self) -> None:
+#         try:
+#             self.mailer.history_mail(self.message, self.function, self.subject)
+#             self.finish_mail.emit("✅ Mail Sent Successfully.")
+#         except Exception as e:
+#             self.finish_mail.emit(f"❌ Mail Failed: {str(e)}")
 
 
-class Mailer:
-    """
-    Handles the construction and sending of emails using Outlook.
-    """
-    def __init__(self) -> None:
-        self.database = DatabaseConnector()
+# class Mailer:
+#     """
+#     Handles the construction and sending of emails using Outlook.
+#     """
+#     def __init__(self) -> None:
+#         self.database = DatabaseConnector()
 
-    def history_mail(self, message: str, function: str, subj: str) -> None:
-        try:
-            recipients = self.get_cc_to()
+#     def history_mail(self, message: str, function: str, subj: str) -> None:
+#         try:
+#             recipients = self.get_cc_to()
 
-            # Check and parse recipient data
-            if not recipients or len(recipients) < 2:
-                raise ValueError("Recipient list must include both CC and To fields.")
+#             # Check and parse recipient data
+#             if not recipients or len(recipients) < 2:
+#                 raise ValueError("Recipient list must include both CC and To fields.")
 
-            cc_recipients = recipients[0][1]
-            to_recipients = recipients[1][1]
+#             cc_recipients = recipients[0][1]
+#             to_recipients = recipients[1][1]
 
-            if not cc_recipients or not to_recipients:
-                raise ValueError("CC or To field is empty.")
+#             if not cc_recipients or not to_recipients:
+#                 raise ValueError("CC or To field is empty.")
 
-            # Create Outlook email
-            outlook = win32.Dispatch('outlook.application')
-            mail = outlook.CreateItem(0)
-            mail.Subject = subj
-            mail.Body = message
-            mail.To = to_recipients
-            mail.CC = cc_recipients
+#             # Create Outlook email
+#             outlook = win32.Dispatch('outlook.application')
+#             mail = outlook.CreateItem(0)
+#             mail.Subject = subj
+#             mail.Body = message
+#             mail.To = to_recipients
+#             mail.CC = cc_recipients
 
-            # Validate recipients
-            if not mail.Recipients.ResolveAll():
-                unresolved = [r.Name for r in mail.Recipients if not r.Resolved]
-                raise Exception(f"Unresolved recipient(s): {unresolved}")
+#             # Validate recipients
+#             if not mail.Recipients.ResolveAll():
+#                 unresolved = [r.Name for r in mail.Recipients if not r.Resolved]
+#                 raise Exception(f"Unresolved recipient(s): {unresolved}")
 
-            # Send or Display mail
-            if function.lower() == 'history':
-                mail.Send()
-            else:
-                mail.Display()
+#             # Send or Display mail
+#             if function.lower() == 'history':
+#                 mail.Send()
+#             else:
+#                 mail.Display()
 
-        except Exception as e:
-            raise Exception(f"Failed to send email: {e}")
+#         except Exception as e:
+#             raise Exception(f"Failed to send email: {e}")
 
-    def get_cc_to(self) -> list:
-        """
-        Retrieves recipient information from the database.
-        Returns:
-            List[Tuple[str, str]]: Each tuple contains ('Type', 'email@example.com')
-        """
-        data = self.database.get_recepients()
-        print("📨 Recipient data fetched from database:", data)
-        return data
+#     def get_cc_to(self) -> list:
+#         """
+#         Retrieves recipient information from the database.
+#         Returns:
+#             List[Tuple[str, str]]: Each tuple contains ('Type', 'email@example.com')
+#         """
+#         data = self.database.get_recepients()
+#         print("📨 Recipient data fetched from database:", data)
+#         return data
 
 # if __name__ == "__main__":
 #     from PyQt6.QtWidgets import (
@@ -139,3 +139,64 @@ class Mailer:
 #     window = EmailSender()
 #     window.show()
 #     sys.exit(app.exec())
+
+
+import win32com.client as win32
+import pywintypes
+from PyQt6.QtCore import QThread, pyqtSignal
+from libs.DatabaseConnector import DatabaseConnector
+
+
+class MailerThread(QThread):
+    finish_mail = pyqtSignal(str)
+
+    def __init__(self, message, function, subject, parent=None):
+        super().__init__(parent)
+        self.mailer = Mailer()
+        self.message = message
+        self.function = function
+        self.subject = subject
+
+    def run(self):
+        try:
+            ok = self.mailer.send_mail(self.message, self.function, self.subject)
+            self.finish_mail.emit("✅ Mail Sent Successfully." if ok else "❌ Mail Failed.")
+        except Exception as e:
+            self.finish_mail.emit(f"❌ Mail Failed: {e}")
+
+
+class Mailer:
+    def __init__(self):
+        self.db = DatabaseConnector()
+
+    def send_mail(self, message: str, function: str, subject: str) -> bool:
+        try:
+            rec = self.db.get_recepients()
+            if not rec or len(rec) < 2:
+                raise Exception("Invalid recipient data.")
+
+            cc = rec[0][1]
+            to = rec[1][1]
+
+            outlook = win32.Dispatch("outlook.application")
+            mail = outlook.CreateItem(0)
+            mail.Subject = subject
+            mail.Body = message
+            mail.To = to
+            mail.CC = cc
+
+            if not mail.Recipients.ResolveAll():
+                raise Exception("Unresolved recipient(s).")
+
+            if function.lower() == "history":
+                try:
+                    mail.Send()
+                    return True
+                except pywintypes.com_error as err:
+                    raise Exception(f"Outlook send error: {err}")
+            else:
+                mail.Display()
+                return True
+
+        except Exception as e:
+            raise Exception(e)

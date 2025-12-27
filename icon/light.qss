@@ -458,7 +458,7 @@ QPushButton[role="saveBHW"] {
     border: 2px solid #1B4F72;  /* Solid border for strong outline */
 }
 
-QPushButton[role="saveBHW"]:hover,{
+QPushButton[role="saveBHW"]:hover{
     background-color: #2980b9;
 }
 

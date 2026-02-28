@@ -96,12 +96,32 @@ class SAPEdit(QWidget):
 
     def load_data(self):
         data = self.database.get_all_sap()
-        self.headers = ["SAP Number", "Price in EURO", "Comment", "GET PN", "Winway PN",
-                        "Qualmax", "Multitest PN", "FASA/SRM/RASCO/LTX PN", "Joshtech"]
+        self.headers = [
+            "SAP Number", "Price in EURO", "Comment", "GET PN", "Winway PN",
+            "Qualmax", "Multitest PN", "FASA/SRM/RASCO/LTX PN", "Joshtech"
+        ]
 
         self.table.setColumnCount(len(self.headers))
-        self.table.setRowCount(len(data))
         self.table.setHorizontalHeaderLabels(self.headers)
+
+        # ------------------------------
+        # NO DATA → show placeholder row
+        # ------------------------------
+        if not data:
+            self.table.setRowCount(1)
+            item = QTableWidgetItem("No data available")
+            item.setFlags(Qt.ItemFlag.NoItemFlags)   # disable editing
+            item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+
+            # span across all columns
+            self.table.setSpan(0, 0, 1, len(self.headers))
+            self.table.setItem(0, 0, item)
+            return
+
+        # ------------------------------
+        # NORMAL DATA
+        # ------------------------------
+        self.table.setRowCount(len(data))
 
         for row_idx, row_data in enumerate(data):
             for col_idx, col_data in enumerate(row_data):

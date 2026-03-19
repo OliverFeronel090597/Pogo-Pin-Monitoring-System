@@ -13,7 +13,7 @@ from libs.resources import *
 from libs.DatabaseConnector import DatabaseConnector
 from libs.StyleUtils import apply_stylesheet
 from libs.GetUser import get_login_user
-from libs.GetPathsAccordingly import get_path
+# from libs.GetPathsAccordingly import get_path  # i dont know why this not use but no big effect on this
 from libs.GlobalVariables import GlobalState
 from libs.ControlButtons import ControlButton
 from libs.CustomSlider import ToggleSlider
@@ -34,8 +34,10 @@ class PogoPinMonitoring(QMainWindow):
         # self.database.insert_e100_user("E1002585", "QUEEN")
         # print(self.database.get_user("E1002585"))
 
-
-        apply_stylesheet(self, ":/resources/light.qss" if self.database.get_theme(get_login_user()) == "light" else ":/resources/light.qss")
+        user_login = get_login_user()
+        theme_is = self.database.get_theme(user_login)
+        print(f"Current theme {theme_is}")
+        apply_stylesheet(self, ":/resources/light.qss" if theme_is == "light" else ":/resources/dark.qss")
         self._init_modules()
         self._init_ui()
         self._create_menu()

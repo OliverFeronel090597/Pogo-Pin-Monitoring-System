@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QApplication, QMainWindow, QMenuBar, QMenu
-from PyQt6.QtGui import QIcon, QPainter, QColor, QFont, QPixmap
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QColor, QFont, QIcon, QPainter, QPixmap
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMenu, QMenuBar
 
 
 def red_dot_icon_with_text(text="1", size=16):

@@ -1,11 +1,12 @@
 import sys
+
 import numpy as np
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
-)
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import \
+    FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.patches import Rectangle
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QPushButton,
+                             QVBoxLayout, QWidget)
 
 
 class GraphCanvas(FigureCanvas):

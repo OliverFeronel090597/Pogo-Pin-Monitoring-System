@@ -1,9 +1,9 @@
-from PyQt6.QtWidgets import (
-    QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QApplication
-)
+import sys
+
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon, QPixmap
-import sys
+from PyQt6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QPushButton,
+                             QVBoxLayout, QWidget)
 
 
 class MessagePopup(QWidget):

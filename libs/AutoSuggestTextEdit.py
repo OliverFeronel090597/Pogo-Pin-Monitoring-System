@@ -1,6 +1,7 @@
-from PyQt6.QtWidgets import QTextEdit, QCompleter
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QKeyEvent, QTextCursor
+from PyQt6.QtWidgets import QCompleter, QTextEdit
+
 
 class SuggestTextEdit(QTextEdit):
     def __init__(self, width, height, items=None, parent=None):

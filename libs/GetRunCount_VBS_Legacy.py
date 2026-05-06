@@ -1,10 +1,7 @@
 import os
 import subprocess
-import sys
 
-from PyQt6.QtCore import Qt, QThread, pyqtSignal
-from PyQt6.QtWidgets import (QApplication, QLabel, QLineEdit, QMessageBox,
-                             QPushButton, QVBoxLayout, QWidget)
+from PyQt6.QtCore import QThread, pyqtSignal
 
 vbs_code = """
 Const adOpenForwardOnly = 0
@@ -22,7 +19,7 @@ passwort = "berep98"
 hardwaretyp_name = WScript.Arguments.Item(0)
 name = WScript.Arguments.Item(1)
 
-sqlabfrage = "SELECT * FROM tdi_cal_owner.tdi_boardhardwareitem_view WHERE hardwaretyp_name = '" & hardwaretyp_name & "' AND name = '" & name & "'"
+sqlabfrage = "SELECT runcount FROM tdi_cal_owner.tdi_boardhardwareitem_view WHERE hardwaretyp_name = '" & hardwaretyp_name & "' AND name = '" & name & "'"
 
 Cn.ConnectionString = "Provider=" & xprovider & ";Password=" & passwort & ";User ID=" & UserName & ";Data Source=" & datenquelle
 Cn.Open
@@ -32,15 +29,7 @@ If rs.EOF Then
     WScript.StdOut.WriteLine "No result"
 Else
     Do Until rs.EOF
-        For i = 0 To rs.Fields.Count - 1
-            WScript.StdOut.Write rs.Fields(i).Name & ": "
-            If IsNull(rs.Fields(i).Value) Then
-                WScript.StdOut.WriteLine "NULL"
-            Else
-                WScript.StdOut.WriteLine rs.Fields(i).Value
-            End If
-        Next
-        WScript.StdOut.WriteLine "-----"
+        WScript.StdOut.WriteLine rs.Fields("runcount").Value
         rs.MoveNext
     Loop
 End If
@@ -49,7 +38,6 @@ rs.Close
 Cn.Close
 Set rs = Nothing
 Set Cn = Nothing
-
 """
 
 class GetRunCount(QThread):
@@ -109,54 +97,3 @@ class GetRunCount(QThread):
         except Exception as e:
             print(f"[Exception] {e}")
             self.result_runcount.emit(None)
-
-
-class RunnerApp(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("RunCount Fetcher")
-        # self.setFixedSize(400, 200)
-
-        self.layout = QVBoxLayout()
-        self.setLayout(self.layout)
-
-        self.label = QLabel("Enter hardwaretyp:")
-        self.input_box = QLineEdit()
-        self.input_box.setPlaceholderText("e.g., 10012345EX3456")
-        self.btn_fetch = QPushButton("Fetch RunCount")
-        self.result_label = QLabel("RunCount will appear here.")
-        self.result_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.layout.addWidget(self.label)
-        self.layout.addWidget(self.input_box)
-        self.layout.addWidget(self.btn_fetch)
-        self.layout.addWidget(self.result_label)
-
-        self.btn_fetch.clicked.connect(self.start_thread)
-
-    def start_thread(self):
-        hardwaretyp = self.input_box.text().strip()
-        if not hardwaretyp:
-            QMessageBox.warning(self, "Input Error", "Please enter a valid hardwaretyp.")
-            return
-
-        self.thread = GetRunCount(hardwaretyp)
-        self.thread.result_runcount.connect(self.display_result)
-        self.thread.message_on_process.connect(self.update_status)
-        self.thread.start()
-
-    def update_status(self, msg):
-        self.result_label.setText(msg)
-
-    def display_result(self, result):
-        if result is None:
-            self.result_label.setText("❌ Failed to fetch run count.")
-        else:
-            self.result_label.setText(f"✅ RunCount: {result}")
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = RunnerApp()
-    window.show()
-    sys.exit(app.exec())

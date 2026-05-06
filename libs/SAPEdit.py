@@ -1,11 +1,9 @@
-from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QTableWidgetItem, QPushButton,
-    QHBoxLayout, QMessageBox, QTableWidget, QAbstractItemView,
-    QStyledItemDelegate, QLineEdit
-)
-from PyQt6.QtCore import Qt, QObject, QEvent
+from PyQt6.QtCore import QEvent, QObject, QRegularExpression, Qt
 from PyQt6.QtGui import QRegularExpressionValidator
-from PyQt6.QtCore import QRegularExpression
+from PyQt6.QtWidgets import (QAbstractItemView, QHBoxLayout, QLineEdit,
+                             QMessageBox, QPushButton, QStyledItemDelegate,
+                             QTableWidget, QTableWidgetItem, QVBoxLayout,
+                             QWidget)
 
 from libs.DatabaseConnector import DatabaseConnector
 from libs.GlobalVariables import GlobalState

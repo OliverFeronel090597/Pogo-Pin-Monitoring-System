@@ -1,8 +1,9 @@
 import sys
-from PyQt6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QLineEdit, QCompleter
-)
-from PyQt6.QtCore import Qt, QStringListModel
+
+from PyQt6.QtCore import QStringListModel, Qt
+from PyQt6.QtWidgets import (QApplication, QCompleter, QLineEdit, QVBoxLayout,
+                             QWidget)
+
 
 class LightCompleterDemo(QWidget):
     def __init__(self):

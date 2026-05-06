@@ -1,6 +1,7 @@
-from PyQt6.QtWidgets import QLabel
-from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import QLabel
+
 
 class ImageLabel(QLabel):
     def __init__(self, image_path="", parent=None):

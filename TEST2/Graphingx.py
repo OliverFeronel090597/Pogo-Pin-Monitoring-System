@@ -1,14 +1,13 @@
+import random
 import sys
+
 import matplotlib.pyplot as plt
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout,
-    QMenu, QFileDialog, QToolTip
-)
-from PyQt6.QtGui import QAction
+import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
-import numpy as np
-import random
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import (QApplication, QFileDialog, QMainWindow, QMenu,
+                             QToolTip, QVBoxLayout, QWidget)
 
 
 class TableGraphApp(QMainWindow):

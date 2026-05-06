@@ -1,14 +1,15 @@
-from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QMenu, QApplication, QMessageBox
-)
-from PyQt6.QtCore import Qt, QObject, QThread, pyqtSignal, QSize
-from PyQt6.QtGui import QAction, QClipboard, QImage
 from io import BytesIO
+
+from PyQt6.QtCore import QObject, QSize, Qt, QThread, pyqtSignal
+from PyQt6.QtGui import QAction, QClipboard, QImage
+from PyQt6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMenu,
+                             QMessageBox, QPushButton, QVBoxLayout, QWidget)
+
 from libs.CalendarLineEdit import DateRangeLineEdit
 from libs.CustomComboBox import CustomDropdown
-from libs.GraphData import GraphData
-from libs.DatabaseConnector import DatabaseConnector
 from libs.CustomSpinBox import CustomSpinBox
+from libs.DatabaseConnector import DatabaseConnector
+from libs.GraphData import GraphData
 from libs.RandomWave import RandomWave
 
 

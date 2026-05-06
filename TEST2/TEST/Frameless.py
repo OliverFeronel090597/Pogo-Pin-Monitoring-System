@@ -1,11 +1,10 @@
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout,
-    QLabel, QPushButton, QHBoxLayout, QMenu, QToolButton
-)
-from PyQt6.QtCore import Qt, QPoint, QEvent
-from PyQt6.QtGui import QMouseEvent
-
 import sys
+
+from PyQt6.QtCore import QEvent, QPoint, Qt
+from PyQt6.QtGui import QMouseEvent
+from PyQt6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
+                             QMenu, QPushButton, QToolButton, QVBoxLayout,
+                             QWidget)
 
 
 class CustomHeader(QWidget):

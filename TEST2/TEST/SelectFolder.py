@@ -1,7 +1,10 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QVBoxLayout, QLabel
 import os
 
+from PyQt6.QtWidgets import (QApplication, QFileDialog, QLabel, QPushButton,
+                             QVBoxLayout, QWidget)
+
 from libs.StyleUtils import apply_stylesheet
+
 
 class RccAuto(QWidget):
     def __init__(self):

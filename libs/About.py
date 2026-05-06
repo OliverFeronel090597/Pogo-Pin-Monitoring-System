@@ -1,7 +1,9 @@
-from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QHBoxLayout
-from PyQt6.QtGui import QPixmap, QIcon
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon, QPixmap
+from PyQt6.QtWidgets import QDialog, QHBoxLayout, QLabel, QVBoxLayout
+
 from libs.GlobalVariables import GlobalState
+
 
 class AboutDialog(QDialog):
     def __init__(self, parent=None):

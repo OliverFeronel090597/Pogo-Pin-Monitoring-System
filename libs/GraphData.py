@@ -1,7 +1,9 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.backends.backend_qt5agg import \
+    FigureCanvasQTAgg as FigureCanvas
 from PyQt6.QtWidgets import QApplication, QVBoxLayout, QWidget
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+
 
 class GraphData(QWidget):
     def __init__(self, categories, bar_data, line_data, right_label, left_label, 

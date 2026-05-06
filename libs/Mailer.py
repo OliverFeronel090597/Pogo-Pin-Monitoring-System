@@ -141,9 +141,10 @@
 #     sys.exit(app.exec())
 
 
-import win32com.client as win32
 import pywintypes
+import win32com.client as win32
 from PyQt6.QtCore import QThread, pyqtSignal
+
 from libs.DatabaseConnector import DatabaseConnector
 
 

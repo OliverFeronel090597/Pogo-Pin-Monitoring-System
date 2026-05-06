@@ -1,6 +1,9 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSpinBox, QLabel
-from PyQt6.QtCore import Qt
 import sys
+
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (QApplication, QLabel, QSpinBox, QVBoxLayout,
+                             QWidget)
+
 
 class CustomSpinBox(QSpinBox):
     def __init__(self, parent=None):

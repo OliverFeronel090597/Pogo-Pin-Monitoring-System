@@ -1,8 +1,8 @@
-from PyQt6.QtWidgets import (
-    QApplication, QDialog, QLineEdit, QLabel,
-    QPushButton, QVBoxLayout, QHBoxLayout, QMessageBox
-)
 import sys
+
+from PyQt6.QtWidgets import (QApplication, QDialog, QHBoxLayout, QLabel,
+                             QLineEdit, QMessageBox, QPushButton, QVBoxLayout)
+
 
 class LoginDialog(QDialog):
     def __init__(self, parent=None):

@@ -1,10 +1,12 @@
-from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QProgressBar
-from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import (QHBoxLayout, QLabel, QProgressBar, QVBoxLayout,
+                             QWidget)
 
 # from libs.CenterWindow import MoveToCenter
 from libs.GlobalVariables import GlobalState
 from libs.resources import *
+
 
 class LoadingScreen(QWidget):
     def __init__(self):

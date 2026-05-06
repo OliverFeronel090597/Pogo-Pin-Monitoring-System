@@ -4,6 +4,7 @@ sqlite3 library to auto connect and disconnect on database
 
 import sqlite3
 
+
 class SQLite:
     def __init__(self):
         self.db_path = r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\DATA\POGOINSERTION.db"

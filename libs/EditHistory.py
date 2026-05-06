@@ -1,21 +1,19 @@
-from PyQt6.QtWidgets import (
-    QDialog, QVBoxLayout, QFormLayout, QPushButton,
-    QHBoxLayout, QLabel, QMessageBox, QSpacerItem,
-    QSizePolicy, QApplication
-)
 from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (QApplication, QDialog, QFormLayout, QHBoxLayout,
+                             QLabel, QMessageBox, QPushButton, QSizePolicy,
+                             QSpacerItem, QVBoxLayout)
 
-from libs.CompleterLineEdit import CompleterLineEdit
-from libs.DatabaseConnector import DatabaseConnector
-from libs.Calendar import CalendarLineEdit
-from libs.CustomComboBox import CustomDropdown
-from libs.GetRunCount import GetRunCount
-from libs.CustomSpinBox import CustomSpinBox
-from libs.CustomLineEditNunChar import NumCharLineEdit
-from libs.SelectSiteLineEdit import SelectSite
 from libs.AutoSuggestTextEdit import SuggestTextEdit
-from libs.GlobalVariables import GlobalState
+from libs.Calendar import CalendarLineEdit
+from libs.CompleterLineEdit import CompleterLineEdit
+from libs.CustomComboBox import CustomDropdown
+from libs.CustomLineEditNunChar import NumCharLineEdit
+from libs.CustomSpinBox import CustomSpinBox
+from libs.DatabaseConnector import DatabaseConnector
+from libs.GetRunCount import GetRunCount
 from libs.GetUser import get_login_user
+from libs.GlobalVariables import GlobalState
+from libs.SelectSiteLineEdit import SelectSite
 
 
 class EditHistoryDialog(QDialog):

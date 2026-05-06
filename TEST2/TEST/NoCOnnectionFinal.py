@@ -1,10 +1,11 @@
-from PyQt6.QtCore import Qt, QTimer, QPointF
-from PyQt6.QtGui import QPainter, QColor, QPen, QPainterPath, QFont
-from PyQt6.QtWidgets import QWidget, QApplication, QMainWindow, QVBoxLayout, QPushButton
 import math
-from PyQt6.QtCore import Qt, QPointF
-from PyQt6.QtGui import QPainter, QColor, QPen, QPainterPath
-from math import sin, pi
+from math import pi, sin
+
+from PyQt6.QtCore import QPointF, Qt, QTimer
+from PyQt6.QtGui import QColor, QFont, QPainter, QPainterPath, QPen
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QPushButton,
+                             QVBoxLayout, QWidget)
+
 
 class NetworkStatusIndicator(QWidget):
     def __init__(self):

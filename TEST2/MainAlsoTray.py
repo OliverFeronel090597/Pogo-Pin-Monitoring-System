@@ -1,9 +1,10 @@
 import sys
-from PyQt6.QtWidgets import (
-    QApplication, QSystemTrayIcon, QMenu, QMainWindow, QLabel, QVBoxLayout, QWidget, QMessageBox
-)
-from PyQt6.QtGui import QIcon, QAction
-from PyQt6.QtCore import QTimer, Qt
+
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QAction, QIcon
+from PyQt6.QtWidgets import (QApplication, QLabel, QMainWindow, QMenu,
+                             QMessageBox, QSystemTrayIcon, QVBoxLayout,
+                             QWidget)
 
 
 class MainWindow(QMainWindow):

@@ -1,7 +1,6 @@
-from PyQt6.QtWidgets import (
-    QLineEdit, QLabel, QVBoxLayout, QHBoxLayout, QCalendarWidget, QFrame
-)
-from PyQt6.QtCore import QDate, Qt, QEvent, QPoint, QTimer, pyqtSignal
+from PyQt6.QtCore import QDate, QEvent, QPoint, Qt, QTimer, pyqtSignal
+from PyQt6.QtWidgets import (QCalendarWidget, QFrame, QHBoxLayout, QLabel,
+                             QLineEdit, QVBoxLayout)
 
 
 class DateRangePopup(QFrame):

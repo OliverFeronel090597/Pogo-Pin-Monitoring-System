@@ -1,9 +1,9 @@
-from PyQt6.QtWidgets import (
-    QDialog, QLineEdit, QLabel,
-    QPushButton, QVBoxLayout, QHBoxLayout,
-)
+from PyQt6.QtWidgets import (QDialog, QHBoxLayout, QLabel, QLineEdit,
+                             QPushButton, QVBoxLayout)
+
 from libs.DatabaseConnector import DatabaseConnector
 from libs.GetUser import get_login_user
+
 
 class FixUser(QDialog):
     def __init__(self, parent=None):

@@ -1,10 +1,13 @@
-import numpy as np
 import random
-from PyQt6.QtWidgets import QWidget, QVBoxLayout
-from PyQt6.QtCore import Qt, QTimer
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
+
+import numpy as np
 from matplotlib import cm
+from matplotlib.backends.backend_qt5agg import \
+    FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtWidgets import QVBoxLayout, QWidget
+
 
 class RandomWave(QWidget):
     def __init__(self, parent=None):

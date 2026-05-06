@@ -1,7 +1,9 @@
-import sqlite3
 import os
 import re
+import sqlite3
+
 from libs.GlobalVariables import GlobalState
+
 
 class DatabaseConnector:
     def __init__(self):

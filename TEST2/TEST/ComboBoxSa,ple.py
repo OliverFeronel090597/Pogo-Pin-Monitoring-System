@@ -1,6 +1,8 @@
-from PyQt6.QtWidgets import QWidget, QComboBox, QVBoxLayout, QApplication
-from PyQt6.QtCore import Qt
 import sys
+
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QComboBox, QVBoxLayout, QWidget
+
 
 class CustomDropdown(QComboBox):
     def __init__(self, items, parent=None):

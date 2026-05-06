@@ -1,6 +1,7 @@
-from PyQt6.QtWidgets import QApplication, QStyle
-from PyQt6.QtGui import QPixmap
 import sys
+
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import QApplication, QStyle
 
 app = QApplication([])
 

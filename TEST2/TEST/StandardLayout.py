@@ -1,8 +1,8 @@
 import sys
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QPushButton, QLabel, QWidget, QVBoxLayout, QHBoxLayout
-)
-from PyQt6.QtCore import Qt, QPoint, QRect, QTimer
+
+from PyQt6.QtCore import QPoint, QRect, Qt, QTimer
+from PyQt6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
+                             QPushButton, QVBoxLayout, QWidget)
 
 
 class SnapPreview(QWidget):

@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QComboBox
 
+
 class CustomDropdown(QComboBox):
     def __init__(self, items, width, parent=None):
         super().__init__(parent)

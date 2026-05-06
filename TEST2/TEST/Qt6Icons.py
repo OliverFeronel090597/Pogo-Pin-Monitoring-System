@@ -1,10 +1,8 @@
 import sys
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QLabel,
-    QVBoxLayout, QHBoxLayout, QScrollArea
-)
+
 from PyQt6.QtGui import QPixmap
-from PyQt6.QtWidgets import QStyle
+from PyQt6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
+                             QScrollArea, QStyle, QVBoxLayout, QWidget)
 
 
 class IconViewer(QMainWindow):

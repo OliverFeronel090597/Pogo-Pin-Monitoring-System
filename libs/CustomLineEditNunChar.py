@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QLineEdit
-from PyQt6.QtGui import QIntValidator
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIntValidator
+from PyQt6.QtWidgets import QLineEdit
 
 
 class NumCharLineEdit(QLineEdit):

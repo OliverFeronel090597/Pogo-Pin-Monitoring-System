@@ -1,10 +1,9 @@
-from PyQt6.QtWidgets import (
-    QApplication, QTableWidget, QTableWidgetItem,
-    QAbstractItemView, QHeaderView, QMainWindow
-)
-from PyQt6.QtCore import Qt, QEvent
-from PyQt6.QtGui import QColor
 import sys
+
+from PyQt6.QtCore import QEvent, Qt
+from PyQt6.QtGui import QColor
+from PyQt6.QtWidgets import (QAbstractItemView, QApplication, QHeaderView,
+                             QMainWindow, QTableWidget, QTableWidgetItem)
 
 
 class HoverTable(QTableWidget):

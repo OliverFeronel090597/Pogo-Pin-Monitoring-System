@@ -1,5 +1,6 @@
-import sys
 import os
+import sys
+
 
 def get_path(relative_path):
     """

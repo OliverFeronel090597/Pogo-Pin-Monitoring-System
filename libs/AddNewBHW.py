@@ -1,5 +1,7 @@
-from PyQt6.QtWidgets import QDialog, QLineEdit, QVBoxLayout, QPushButton
+from PyQt6.QtWidgets import QDialog, QLineEdit, QPushButton, QVBoxLayout
+
 from libs.DatabaseConnector import DatabaseConnector
+
 
 class AddNewHBW(QDialog):
     def __init__(self, parent=None):

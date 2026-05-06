@@ -1,10 +1,11 @@
 import sys
-from PyQt6.QtCore import Qt, QPropertyAnimation, QPoint, QEasingCurve, QTimer
+
+from PyQt6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Qt, QTimer
 from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QPushButton, QWidget, QLabel, QVBoxLayout,
-    QHBoxLayout, QFrame, QGraphicsOpacityEffect
-)
+from PyQt6.QtWidgets import (QApplication, QFrame, QGraphicsOpacityEffect,
+                             QHBoxLayout, QLabel, QMainWindow, QPushButton,
+                             QVBoxLayout, QWidget)
+
 
 class SlideNotification(QFrame):
     def __init__(self, text, parent):

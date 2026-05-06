@@ -1,8 +1,7 @@
-from PyQt6.QtWidgets import (
-    QVBoxLayout, QLineEdit, QCalendarWidget, QDialog
-)
-from PyQt6.QtCore import QDate, Qt
 import sys
+
+from PyQt6.QtCore import QDate, Qt
+from PyQt6.QtWidgets import QCalendarWidget, QDialog, QLineEdit, QVBoxLayout
 
 
 class SmartCalendar(QCalendarWidget):

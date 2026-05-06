@@ -1,18 +1,16 @@
-from PyQt6.QtWidgets import (
-    QMainWindow, QWidget, QApplication, QVBoxLayout, QSlider, QLabel, QPushButton, QHBoxLayout
-)
-from PyQt6.QtCore import (
-    Qt, QRectF, QPointF, QTimer, QEasingCurve, QPropertyAnimation, pyqtProperty
-)
-from PyQt6.QtGui import (
-    QPainter, QPen, QColor, QFont,
-    QConicalGradient, QRadialGradient, QPainterPath, QBrush,
-    QLinearGradient, QPainterPathStroker, QFontMetrics
-)
-import sys
 import math
 import random
-from typing import List, Dict, Tuple
+import sys
+from typing import Dict, List, Tuple
+
+from PyQt6.QtCore import (QEasingCurve, QPointF, QPropertyAnimation, QRectF,
+                          Qt, QTimer, pyqtProperty)
+from PyQt6.QtGui import (QBrush, QColor, QConicalGradient, QFont, QFontMetrics,
+                         QLinearGradient, QPainter, QPainterPath,
+                         QPainterPathStroker, QPen, QRadialGradient)
+from PyQt6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
+                             QPushButton, QSlider, QVBoxLayout, QWidget)
+
 
 class CircularLoadingBar(QWidget):
     def __init__(self):
@@ -293,8 +291,8 @@ class CircularLoadingBar(QWidget):
         painter.setPen(self._colors['text'])
         painter.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, progress_text)
 
-from PyQt6.QtCore import Qt, QTimer, QPointF, QRectF
-from PyQt6.QtGui import QPainter, QColor, QPen, QFont, QPainterPath
+from PyQt6.QtCore import QPointF, QRectF, Qt, QTimer
+from PyQt6.QtGui import QColor, QFont, QPainter, QPainterPath, QPen
 from PyQt6.QtWidgets import QWidget
 
 

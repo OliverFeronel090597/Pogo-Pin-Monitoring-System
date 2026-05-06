@@ -1,7 +1,9 @@
-import sys
-import subprocess
 import os
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
+import subprocess
+import sys
+
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QPushButton,
+                             QVBoxLayout, QWidget)
 
 
 class MainWindow(QMainWindow):

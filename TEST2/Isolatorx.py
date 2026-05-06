@@ -1,12 +1,10 @@
-import sys
 import os
 import subprocess
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton,
-    QFileDialog, QMessageBox
-)
-from PyQt6.QtCore import Qt
+import sys
 
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (QApplication, QFileDialog, QMainWindow,
+                             QMessageBox, QPushButton, QVBoxLayout, QWidget)
 
 # 🔒 Whitelisted paths
 ALLOWED_EXECUTABLE = os.path.normcase(os.path.abspath(r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\EXE\PPMv5.exe"))

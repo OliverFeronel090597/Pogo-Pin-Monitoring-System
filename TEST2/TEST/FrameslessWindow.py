@@ -1,9 +1,8 @@
 import sys
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QLabel, QPushButton,
-    QHBoxLayout, QVBoxLayout, QStyle
-)
-from PyQt6.QtCore import Qt, QPoint
+
+from PyQt6.QtCore import QPoint, Qt
+from PyQt6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QMainWindow,
+                             QPushButton, QStyle, QVBoxLayout, QWidget)
 
 
 class CustomTitleBar(QWidget):

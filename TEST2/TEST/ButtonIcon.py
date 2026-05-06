@@ -1,6 +1,8 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
-from PyQt6.QtGui import QIcon
 import sys
+
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QApplication, QPushButton, QVBoxLayout, QWidget
+
 
 class IconButtonDemo(QWidget):
     def __init__(self):

@@ -1,5 +1,7 @@
 import os
+
 from PIL import Image
+
 
 def convert_folder_to_png(folder_path: str):
     supported_extensions = (".jpg", ".jpeg", ".bmp", ".gif", ".tiff", ".webp")

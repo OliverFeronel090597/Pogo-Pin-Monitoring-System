@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QPushButton
 
+
 class ControlButton(QPushButton):
     def __init__(self, on_click=None, width=150, height=35, name="", parent=None):
         """

@@ -1,6 +1,7 @@
-import sqlite3
 import os
 import re
+import sqlite3
+
 
 class DatabaseConnector:
     def __init__(self):

@@ -1,6 +1,8 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
+
 from PyQt6.QtCore import QTimer
+from PyQt6.QtWidgets import QApplication, QPushButton, QVBoxLayout, QWidget
+
 
 class ButtonProcessApp(QWidget):
     def __init__(self):

@@ -1,5 +1,6 @@
-from PyQt6.QtWidgets import QTextEdit
 from PyQt6.QtGui import QPainter, QPixmap
+from PyQt6.QtWidgets import QTextEdit
+
 try:
     from libs.Resources import *
 except ImportError:

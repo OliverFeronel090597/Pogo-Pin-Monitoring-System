@@ -1,7 +1,6 @@
-from PyQt6.QtCore import Qt, QPropertyAnimation, QPoint, QEasingCurve, QTimer
-from PyQt6.QtWidgets import (
-    QWidget, QLabel, QHBoxLayout, QFrame, QApplication, QStyle
-)
+from PyQt6.QtCore import QEasingCurve, QPoint, QPropertyAnimation, Qt, QTimer
+from PyQt6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel, QStyle,
+                             QWidget)
 
 
 class SlideNotification(QFrame):

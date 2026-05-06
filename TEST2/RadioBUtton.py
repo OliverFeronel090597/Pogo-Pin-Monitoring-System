@@ -1,8 +1,8 @@
 import sys
-from PyQt6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QHBoxLayout,
-    QGroupBox, QRadioButton, QLabel
-)
+
+from PyQt6.QtWidgets import (QApplication, QGroupBox, QHBoxLayout, QLabel,
+                             QRadioButton, QVBoxLayout, QWidget)
+
 
 class RadioExample(QWidget):
     def __init__(self):

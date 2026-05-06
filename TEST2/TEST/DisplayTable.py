@@ -1,10 +1,10 @@
-import sys
 import sqlite3
-from PyQt6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QTableWidgetItem, QPushButton,
-    QHBoxLayout, QMessageBox, QTableWidget, QAbstractItemView
-)
-from PyQt6.QtCore import Qt, QObject, QEvent
+import sys
+
+from PyQt6.QtCore import QEvent, QObject, Qt
+from PyQt6.QtWidgets import (QAbstractItemView, QApplication, QHBoxLayout,
+                             QMessageBox, QPushButton, QTableWidget,
+                             QTableWidgetItem, QVBoxLayout, QWidget)
 
 
 class EditableTable(QTableWidget):

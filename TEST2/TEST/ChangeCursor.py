@@ -1,7 +1,9 @@
 import sys
 import time
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
+
 from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtWidgets import QApplication, QPushButton, QVBoxLayout, QWidget
+
 
 class MyWindow(QWidget):
     def __init__(self):

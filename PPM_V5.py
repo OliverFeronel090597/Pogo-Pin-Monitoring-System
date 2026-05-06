@@ -1,30 +1,32 @@
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QStackedWidget, QFrame, QLabel, QMessageBox
-)
-from PyQt6.QtGui import QAction, QIcon
-from PyQt6.QtCore import Qt, QTimer
 import datetime
-import sys
-import time
 import os
 import shutil
+import sys
+import time
 
-from libs.resources import *
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QAction, QIcon
+from PyQt6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
+                             QMainWindow, QMessageBox, QStackedWidget,
+                             QVBoxLayout, QWidget)
+
+from libs.About import AboutDialog
+from libs.AddNew import AddNew
+from libs.ControlButtons import ControlButton
+from libs.CustomSlider import ToggleSlider
 from libs.DatabaseConnector import DatabaseConnector
-from libs.StyleUtils import apply_stylesheet
+from libs.DataGraphing import DataGraphing
 from libs.GetUser import get_login_user
 # from libs.GetPathsAccordingly import get_path  # i dont know why this not use but no big effect on this
 from libs.GlobalVariables import GlobalState
-from libs.ControlButtons import ControlButton
-from libs.CustomSlider import ToggleSlider
-from libs.AddNew import AddNew
-from libs.SAPEdit import SAPEdit
 from libs.History import History
-from libs.NotificationManager import NotificationManager
-from libs.LoginForm import LoginDialog
-from libs.About import AboutDialog
-from libs.DataGraphing import DataGraphing
 from libs.LoadingScreen import LoadingScreen
+from libs.LoginForm import LoginDialog
+from libs.NotificationManager import NotificationManager
+from libs.resources import *
+from libs.SAPEdit import SAPEdit
+from libs.StyleUtils import apply_stylesheet
+
 
 class PogoPinMonitoring(QMainWindow):
     def __init__(self):

@@ -1,5 +1,6 @@
-from PyQt6.QtWidgets import QLineEdit, QCompleter, QListView
-from PyQt6.QtCore import Qt, QStringListModel
+from PyQt6.QtCore import QStringListModel, Qt
+from PyQt6.QtWidgets import QCompleter, QLineEdit, QListView
+
 
 class CompleterLineEdit(QLineEdit):
     def __init__(self, suggestions, width, callback, enter_func=False, parent=None):

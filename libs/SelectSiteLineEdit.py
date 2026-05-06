@@ -1,5 +1,7 @@
-from PyQt6.QtWidgets import QLineEdit, QDialog
+from PyQt6.QtWidgets import QDialog, QLineEdit
+
 from libs.NumberInputDialog import SiteSelectDialog
+
 
 class SelectSite(QLineEdit):
     def __init__(self,width = 200, initial_text="Double click", parent=None):

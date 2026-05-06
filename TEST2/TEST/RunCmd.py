@@ -1,5 +1,8 @@
 import subprocess
-from PyQt6.QtWidgets import QApplication, QPushButton, QVBoxLayout, QWidget, QTextEdit
+
+from PyQt6.QtWidgets import (QApplication, QPushButton, QTextEdit, QVBoxLayout,
+                             QWidget)
+
 
 class CommandRunner(QWidget):
     def __init__(self):

@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QSpinBox
 
+
 class CustomSpinBox(QSpinBox):
     def __init__(self, width, value=0, parent=None):
         super().__init__(parent)

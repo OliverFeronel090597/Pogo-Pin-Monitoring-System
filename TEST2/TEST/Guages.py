@@ -1,19 +1,16 @@
-from PyQt6.QtWidgets import (
-    QMainWindow, QWidget, QApplication, QVBoxLayout, QSlider, QLabel
-)
-from PyQt6.QtCore import (
-    Qt, QRectF, QPointF, QTimer, QEasingCurve, QTimer
-)
-from PyQt6.QtGui import (
-    QPainter, QPen, QColor, QFont,
-    QConicalGradient, QRadialGradient, QPainterPath, QBrush,
-    QLinearGradient, QPainterPathStroker, QFontMetrics
-)
-import time
-import sys
 import math
 import random
-from typing import List, Dict
+import sys
+import time
+from typing import Dict, List
+
+from PyQt6.QtCore import QEasingCurve, QPointF, QRectF, Qt, QTimer
+from PyQt6.QtGui import (QBrush, QColor, QConicalGradient, QFont, QFontMetrics,
+                         QLinearGradient, QPainter, QPainterPath,
+                         QPainterPathStroker, QPen, QRadialGradient)
+from PyQt6.QtWidgets import (QApplication, QLabel, QMainWindow, QSlider,
+                             QVBoxLayout, QWidget)
+
 
 class CircularLoadingBar(QWidget):
     def __init__(self):

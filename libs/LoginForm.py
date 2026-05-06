@@ -1,12 +1,12 @@
-from PyQt6.QtWidgets import (
-    QDialog, QLineEdit, QLabel,
-    QPushButton, QVBoxLayout, QHBoxLayout,
-    QMessageBox, QRadioButton
-)
 from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import (QDialog, QHBoxLayout, QLabel, QLineEdit,
+                             QMessageBox, QPushButton, QRadioButton,
+                             QVBoxLayout)
+
 from libs.DatabaseConnector import DatabaseConnector
-from libs.Hasher import hash_password
 from libs.GlobalVariables import GlobalState
+from libs.Hasher import hash_password
+
 
 class LoginDialog(QDialog):
     def __init__(self, function="login", parent=None):

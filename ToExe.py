@@ -1,10 +1,10 @@
-import subprocess
 import os
 import platform
+import subprocess
 
 # === Configuration ===
 script_path = "PPM_V5.py"
-icon_path = "icon\main-logo.png"
+icon_path = r"icon\main-logo.png"
 output_dir = "EXE"
 
 # List of extra files or folders to include (source, destination_inside_exe)

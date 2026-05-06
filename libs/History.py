@@ -1,14 +1,13 @@
-from PyQt6.QtWidgets import (
-    QWidget, QVBoxLayout, QTableWidgetItem, QTableWidget, QAbstractItemView,
-    QMenu, QHBoxLayout, QLabel, QHeaderView
-)
-from PyQt6.QtCore import Qt, QEvent, QObject, QTimer
+from PyQt6.QtCore import QEvent, QObject, Qt, QTimer
 from PyQt6.QtGui import QGuiApplication, QKeySequence
+from PyQt6.QtWidgets import (QAbstractItemView, QHBoxLayout, QHeaderView,
+                             QLabel, QMenu, QTableWidget, QTableWidgetItem,
+                             QVBoxLayout, QWidget)
 
-from libs.DatabaseConnector import DatabaseConnector
-from libs.CustomSpinBox import CustomSpinBox
-from libs.CompleterLineEdit import CompleterLineEdit
 from libs.CalendarLineEdit import DateRangeLineEdit
+from libs.CompleterLineEdit import CompleterLineEdit
+from libs.CustomSpinBox import CustomSpinBox
+from libs.DatabaseConnector import DatabaseConnector
 from libs.EditHistory import EditHistoryDialog
 
 

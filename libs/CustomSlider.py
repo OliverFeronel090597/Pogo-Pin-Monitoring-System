@@ -1,9 +1,10 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSlider, QLabel
-from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve, pyqtSignal
-from PyQt6.QtGui import QMouseEvent
 import sys
 from pathlib import Path
 from typing import Optional
+
+from PyQt6.QtCore import QEasingCurve, QPropertyAnimation, Qt, pyqtSignal
+from PyQt6.QtGui import QMouseEvent
+from PyQt6.QtWidgets import QApplication, QLabel, QSlider, QVBoxLayout, QWidget
 
 from libs.DatabaseConnector import DatabaseConnector
 from libs.GetUser import get_login_user

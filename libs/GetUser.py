@@ -1,6 +1,7 @@
 import ctypes
 import inspect
 
+
 def get_login_user():
     # Detect caller info
     # stack = inspect.stack()

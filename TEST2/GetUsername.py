@@ -1,5 +1,6 @@
-import getpass
 import ctypes
+import getpass
+
 
 def get_windows_display_name():
     NameDisplay = 3

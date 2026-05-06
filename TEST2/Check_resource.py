@@ -1,5 +1,6 @@
 from PyQt6.QtCore import QDir, QDirIterator
 
+
 def list_resource_files_by_input():
     """
     Prompts user to input a Qt resource path (like :/resources),

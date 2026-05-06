@@ -1,8 +1,8 @@
-from PyQt6.QtWidgets import (
-    QApplication, QWidget, QFormLayout,
-    QLineEdit, QPushButton, QVBoxLayout
-)
 import sys
+
+from PyQt6.QtWidgets import (QApplication, QFormLayout, QLineEdit, QPushButton,
+                             QVBoxLayout, QWidget)
+
 
 class FormExample(QWidget):
     def __init__(self):

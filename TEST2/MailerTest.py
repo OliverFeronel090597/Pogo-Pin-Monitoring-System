@@ -10,11 +10,12 @@ Usage:
     python MailerTest.py --send    # attempts to send silently
 """
 
-import sys
-import os
-import ctypes
 import argparse
+import ctypes
+import os
+import sys
 import traceback
+
 
 # Elevation helper ----------------------------------------------------------
 def is_running_as_admin() -> bool:

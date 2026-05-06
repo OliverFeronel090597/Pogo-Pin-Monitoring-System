@@ -1,23 +1,26 @@
-from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QSpacerItem, QLabel, QFormLayout, QSpinBox,\
-     QPushButton, QApplication, QMessageBox, QDialog
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import (QApplication, QDialog, QFormLayout, QHBoxLayout,
+                             QLabel, QMainWindow, QMessageBox, QPushButton,
+                             QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
+                             QWidget)
 
-from libs.ImageLabel import ImageLabel
-from libs.CompleterLineEdit import CompleterLineEdit
-from libs.DatabaseConnector import DatabaseConnector
+from libs.AddNewBHW import AddNewHBW
+from libs.AutoSuggestTextEdit import SuggestTextEdit
 from libs.Calendar import CalendarLineEdit
+from libs.CompleterLineEdit import CompleterLineEdit
 from libs.CustomComboBox import CustomDropdown
-from libs.GetRunCount import GetRunCount
 from libs.CustomLineEditNunChar import NumCharLineEdit
 from libs.CustomSpinBox import CustomSpinBox
-from libs.SelectSiteLineEdit import SelectSite
-from libs.AutoSuggestTextEdit import SuggestTextEdit
-from libs.Mailer import MailerThread
+from libs.DatabaseConnector import DatabaseConnector
+from libs.FixE100User import FixUser
+from libs.GetRunCount import GetRunCount
 from libs.GetUser import get_login_user
 from libs.GlobalVariables import GlobalState
-from libs.FixE100User import FixUser
-from libs.AddNewBHW import AddNewHBW
+from libs.ImageLabel import ImageLabel
+from libs.Mailer import MailerThread
+from libs.SelectSiteLineEdit import SelectSite
+
 
 class AddNew(QWidget):
     def __init__(self, parent: QMainWindow):

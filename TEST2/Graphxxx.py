@@ -1,13 +1,17 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from io import StringIO
-from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
-                            QPushButton, QComboBox, QLabel, QTabWidget, QScrollArea)
-from PyQt6.QtCore import Qt
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
 import sys
+from io import StringIO
+
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+from matplotlib.backends.backend_qt5agg import \
+    FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
+                             QMainWindow, QPushButton, QScrollArea, QTabWidget,
+                             QVBoxLayout, QWidget)
+
 # Sample data
 data = """
 ID,	BHW Name,	Date Replaced,	Run Count,	SAP#	,Qty. of Pogo Pins Replaced,	Total Price in Euro,	Site/s,	Replaced by	Remarks

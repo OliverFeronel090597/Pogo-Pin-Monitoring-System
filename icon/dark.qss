@@ -616,8 +616,139 @@ QMessageBox QLabel {
 /*  ##############################################################################
     #####                           History                                  #####
     ############################################################################## */
+/*  ##############################################################################
+    #####                           QSpinBox Styles (Dark Theme)              #####
+    ############################################################################## */
 
-    
+/* Generic SpinBox styling */
+QSpinBox {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 5px 7px;
+    font-size: 11pt;
+    min-height: 20px;
+    max-height: 32px;
+    selection-background-color: #3498db;
+    selection-color: #ECF0F1;
+}
+
+/* Remove SpinBox up/down buttons (arrows) */
+QSpinBox::up-button,
+QSpinBox::down-button {
+    width: 0px;
+    height: 0px;
+    border: none;
+    background: none;
+}
+
+/* Focus state */
+QSpinBox:focus {
+    border: 1px solid #3498db;
+    background-color: #454545;
+}
+
+/* Disabled state */
+QSpinBox:disabled {
+    background-color: #2a2a2a;
+    color: #888888;
+    border: 1px solid #444;
+}
+
+/* ============================================================================
+   Role-specific QSpinBox Styles
+   ============================================================================ */
+
+/* CustomSpinBox role (Add New form) */
+QSpinBox[role="CustomSpinBox"] {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 5px 7px;
+    font-size: 11pt;
+    min-height: 20px;
+    max-height: 32px;
+    selection-background-color: #3498db;
+    selection-color: #ECF0F1;
+}
+
+QSpinBox[role="CustomSpinBox"]::up-button,
+QSpinBox[role="CustomSpinBox"]::down-button {
+    width: 0px;
+    height: 0px;
+    border: none;
+    background: none;
+}
+
+QSpinBox[role="CustomSpinBox"]:focus {
+    border: 1px solid #3498db;
+    background-color: #454545;
+}
+
+/* History Input role (History form) */
+QSpinBox[role="historyInput"] {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 5px 7px;
+    font-size: 11pt;
+    min-height: 20px;
+    max-height: 32px;
+    selection-background-color: #3498db;
+    selection-color: #ECF0F1;
+}
+
+QSpinBox[role="historyInput"]::up-button,
+QSpinBox[role="historyInput"]::down-button {
+    width: 0px;
+    height: 0px;
+    border: none;
+    background: none;
+}
+
+QSpinBox[role="historyInput"]:focus {
+    border: 1px solid #3498db;
+    background-color: #454545;
+}
+
+/* Data Graph role */
+QSpinBox[role="dataGraph"] {
+    background-color: #353535;
+    color: #ECF0F1;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 5px 7px;
+    font-size: 11pt;
+    min-height: 20px;
+    max-height: 32px;
+    selection-background-color: #3498db;
+    selection-color: #ECF0F1;
+}
+
+QSpinBox[role="dataGraph"]::up-button,
+QSpinBox[role="dataGraph"]::down-button {
+    width: 0px;
+    height: 0px;
+    border: none;
+    background: none;
+}
+
+QSpinBox[role="dataGraph"]:focus {
+    border: 1px solid #3498db;
+    background-color: #454545;
+}
+
+/* Optional: Compact version for tight spaces */
+QSpinBox[role="compact"] {
+    padding: 2px 5px;
+    min-height: 16px;
+    max-height: 24px;
+    font-size: 10pt;
+}
+
 
 
 

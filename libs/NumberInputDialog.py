@@ -49,10 +49,10 @@ class SiteSelectDialog(QDialog):
             self.buttons[i] = button
 
         # Control Buttons
-        self.select_all_button = self.create_control_button("Select All", self.select_all)
-        self.deselect_all_button = self.create_control_button("Deselect All", self.deselect_all)
-        self.select_16_button = self.create_control_button("16 Sites", self.select_16_sites)
-        self.ok_button = self.create_control_button("OK", self.accept)
+        self.select_all_button      = self.create_control_button("Select All", self.select_all)
+        self.deselect_all_button    = self.create_control_button("Deselect All", self.deselect_all)
+        self.select_16_button       = self.create_control_button("16 Sites", self.select_16_sites)
+        self.ok_button              = self.create_control_button("OK", self.accept)
 
         self.control_layout.addWidget(self.deselect_all_button)
         self.control_layout.addWidget(self.select_all_button)
@@ -83,7 +83,7 @@ class SiteSelectDialog(QDialog):
         """)
         return button
 
-    def parse_initial_sites(self, initial_sites):
+    def parse_initial_sites(self, initial_sites: str):
         if "36 sites" in initial_sites:
             return set(range(1, 37))
         elif "16 sites" in initial_sites:
@@ -99,6 +99,7 @@ class SiteSelectDialog(QDialog):
         self.update_button_color()
 
     def update_button_color(self):
+        button : QPushButton = None
         for num, button in self.buttons.items():
             if num in self.selected_numbers:
                 button.setStyleSheet(self.site_style_selected)

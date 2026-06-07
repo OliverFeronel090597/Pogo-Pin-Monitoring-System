@@ -1,19 +1,19 @@
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (QApplication, QDialog, QFormLayout, QHBoxLayout,
+from PyQt6.QtCore       import Qt
+from PyQt6.QtWidgets    import (QApplication, QDialog, QFormLayout, QHBoxLayout,
                              QLabel, QMessageBox, QPushButton, QSizePolicy,
                              QSpacerItem, QVBoxLayout)
 
-from libs.AutoSuggestTextEdit import SuggestTextEdit
-from libs.Calendar import CalendarLineEdit
-from libs.CompleterLineEdit import CompleterLineEdit
-from libs.CustomComboBox import CustomDropdown
+from libs.AutoSuggestTextEdit   import SuggestTextEdit
+from libs.Calendar              import CalendarLineEdit
+from libs.CompleterLineEdit     import CompleterLineEdit
+from libs.CustomComboBox        import CustomDropdown
 from libs.CustomLineEditNunChar import NumCharLineEdit
-from libs.CustomSpinBox import CustomSpinBox
-from libs.DatabaseConnector import DatabaseConnector
-from libs.GetRunCount import GetRunCount
-from libs.GetUser import get_login_user
-from libs.GlobalVariables import GlobalState
-from libs.SelectSiteLineEdit import SelectSite
+from libs.CustomSpinBox         import CustomSpinBox
+from libs.DatabaseConnector     import DatabaseConnector
+from libs.GetRunCount           import GetRunCount
+from libs.GetUser               import get_login_user
+from libs.GlobalVariables       import GlobalState
+from libs.SelectSiteLineEdit    import SelectSite
 
 
 class EditHistoryDialog(QDialog):
@@ -91,12 +91,19 @@ class EditHistoryDialog(QDialog):
         self.date_replaced.setText(data.get("Date Replaced", ""))
         self.sap_input.setCurrentText(data.get("SAP#", ""))
         self.run_count.setText(data.get("Run Count", ""))
-        self.pogo_pin_use.setValue(int(data.get("Qty. of Pogo Pins Replaced", 0)))
+        
+        # Fix: Convert to int, handling string or None values
+        pogo_value = data.get("Qty. of Pogo Pins Replaced", 0)
+        try:
+            self.pogo_pin_use.setValue(int(pogo_value))
+        except (ValueError, TypeError):
+            self.pogo_pin_use.setValue(0)
+        
         self.total_price.setText(data.get("Total Price in Euro", ""))
         self.select_site.setText(data.get("Site/s", ""))
         self.login_user.setText(data.get("Replaced by", ""))
         self.comment.setText(data.get("Remarks", ""))
-
+    
     def get_pogo_price(self):
         try:
             self.pogo_price = self.database.get_sap_price(self.sap_input.currentText())[0]
@@ -105,11 +112,14 @@ class EditHistoryDialog(QDialog):
 
     def calculate_total_price(self):
         try:
-            total_price = self.pogo_price * int(self.pogo_pin_use.text())
+            # Get the text and convert to int, handling empty strings
+            pogo_text = self.pogo_pin_use.text()
+            pogo_value = int(pogo_text) if pogo_text else 0
+            total_price = self.pogo_price * pogo_value
             self.total_price.setText("{:.2f}".format(total_price))
         except ValueError:
             self.total_price.setText("0.00")
-
+            
     def bhw_valid(self, bhw):
         QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         if hasattr(self, 'get_run_count') and self.get_run_count is not None and self.get_run_count.isRunning():

@@ -191,18 +191,23 @@ class History(QWidget):
 
         for row_idx, row_data in enumerate(data):
             for col_idx, col_data in enumerate(row_data):
-                display_value = "" if col_data in (None, "", " ") else str(col_data)
-
-                item = QTableWidgetItem(display_value)
-                item.setFlags(Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEnabled)
-
-                # Special handling for ID column
+                # Special handling for ID column (column 0) - store as integer for proper sorting
                 if col_idx == 0:
                     try:
-                        item.setData(Qt.ItemDataRole.DisplayRole, int(col_data))
+                        numeric_value = int(col_data)
+                        item = QTableWidgetItem()
+                        item.setData(Qt.ItemDataRole.DisplayRole, numeric_value)
+                        item.setData(Qt.ItemDataRole.EditRole, numeric_value)
                     except (ValueError, TypeError):
+                        item = QTableWidgetItem("0")
                         item.setData(Qt.ItemDataRole.DisplayRole, 0)
-
+                        item.setData(Qt.ItemDataRole.EditRole, 0)
+                else:
+                    # For other columns, use string display
+                    display_value = "" if col_data in (None, "", " ") else str(col_data)
+                    item = QTableWidgetItem(display_value)
+                
+                item.setFlags(Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEnabled)
                 self.table.setItem(row_idx, col_idx, item)
 
         # Resize all columns except the last

@@ -4,28 +4,29 @@ import shutil
 import sys
 import time
 
-from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtGui import QAction, QIcon
-from PyQt6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-                             QMainWindow, QMessageBox, QStackedWidget,
-                             QVBoxLayout, QWidget)
+from PyQt6.QtCore               import Qt, QTimer
+from PyQt6.QtGui                import QAction, QIcon
+from PyQt6.QtWidgets            import (QApplication, QFrame, QHBoxLayout, QLabel,
+                                QMainWindow, QMessageBox, QStackedWidget,
+                                QVBoxLayout, QWidget)
 
-from libs.About import AboutDialog
-from libs.AddNew import AddNew
-from libs.ControlButtons import ControlButton
-from libs.CustomSlider import ToggleSlider
-from libs.DatabaseConnector import DatabaseConnector
-from libs.DataGraphing import DataGraphing
-from libs.GetUser import get_login_user
+
 # from libs.GetPathsAccordingly import get_path  # i dont know why this not use but no big effect on this
-from libs.GlobalVariables import GlobalState
-from libs.History import History
-from libs.LoadingScreen import LoadingScreen
-from libs.LoginForm import LoginDialog
-from libs.NotificationManager import NotificationManager
-from libs.resources import *
-from libs.SAPEdit import SAPEdit
-from libs.StyleUtils import apply_stylesheet
+# from libs.CustomSlider        import ToggleSlider
+from libs.About                 import AboutDialog
+from libs.AddNew                import AddNew
+from libs.ControlButtons        import ControlButton
+from libs.DatabaseConnector     import DatabaseConnector
+from libs.DataGraphing          import DataGraphing
+from libs.GlobalVariables       import GlobalState
+from libs.History               import History
+from libs.LoadingScreen         import LoadingScreen
+from libs.LoginForm             import LoginDialog
+from libs.NotificationManager   import NotificationManager
+from libs.resources             import *
+from libs.SAPEdit               import SAPEdit
+from libs.StyleUtils            import apply_stylesheet
+from libs.GetUser               import get_login_user
 
 
 class PogoPinMonitoring(QMainWindow):
@@ -39,14 +40,21 @@ class PogoPinMonitoring(QMainWindow):
         user_login = get_login_user()
         theme_is = self.database.get_theme(user_login)
         print(f"Current theme {theme_is}")
-        apply_stylesheet(self, ":/resources/light.qss" if theme_is == "light" else ":/resources/dark.qss")
+        apply_stylesheet(self, ":/resources/light.qss")#":/resources/light.qss")
         self._init_modules()
         self._init_ui()
         self._create_menu()
         self._create_taskbar()
+        
+        # self.timer = QTimer()
+        # self.timer.timeout.connect(lambda: apply_stylesheet(self, r"C:\Users\O.Feronel\OneDrive - ams OSRAM\Documents\PYTHON\PPM_V5\icon\light.qss"))
+        # self.timer.start(1000)  # Interval in milliseconds
+        
+        # def on_timeout(self):
+        #     print("Timer triggered")
 
     def _init_modules(self):
-        self.slider_switch = ToggleSlider(parent=self)
+       #self.slider_switch = ToggleSlider(parent=self)
         self.add_new = AddNew(self)
         self.sap_edit = SAPEdit(self)
         self.histoty = History(self)
@@ -54,7 +62,7 @@ class PogoPinMonitoring(QMainWindow):
         self.last_clicked_button = None
 
     def _init_ui(self):
-        self.setWindowTitle("Pogo Pin Monitoring BETA")
+        self.setWindowTitle("Pogo Pin Monitoring")
         self.setWindowIcon(QIcon(":/resources/main-logo.png"))
         self.setMinimumSize(1100, 790)
         self.resize(1000, 790)
@@ -90,16 +98,16 @@ class PogoPinMonitoring(QMainWindow):
         self.main_layout.addLayout(self.control_layout)
 
         # Buttons
-        self.add_new_button = ControlButton(name="New Item")
-        self.sap_button = ControlButton(name="SAP")
-        self.history_button = ControlButton(name="History")
+        self.add_new_button      = ControlButton(name="New Item")
+        self.sap_button          = ControlButton(name="SAP")
+        self.history_button      = ControlButton(name="History")
         self.data_extract_button = ControlButton(name="Extract Data")
 
         # Connect buttons
-        self.add_new_button.clicked.connect(lambda: self.on_button_click(self.add_new_button, self.stack_widget, 0))
-        self.sap_button.clicked.connect(lambda: self.on_button_click(self.sap_button, self.stack_widget, 1))
-        self.history_button.clicked.connect(lambda: self.on_button_click(self.history_button, self.stack_widget, 2))
-        self.data_extract_button.clicked.connect(lambda: self.on_button_click(self.data_extract_button, self.stack_widget, 3))
+        self.add_new_button.clicked.      connect(lambda: self.on_button_click(self.add_new_button, self.stack_widget     , 0))
+        self.sap_button.clicked.          connect(lambda: self.on_button_click(self.sap_button, self.stack_widget         , 1))
+        self.history_button.clicked.      connect(lambda: self.on_button_click(self.history_button, self.stack_widget     , 2))
+        self.data_extract_button.clicked. connect(lambda: self.on_button_click(self.data_extract_button, self.stack_widget, 3))
 
         # Add to layout
         self.control_layout.addWidget(self.add_new_button)
@@ -111,14 +119,14 @@ class PogoPinMonitoring(QMainWindow):
         self.mode_layout = QHBoxLayout()
         self.mode_layout.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.control_layout.addLayout(self.mode_layout)
-        self.mode_layout.addWidget(self.slider_switch)
+        # self.mode_layout.addWidget(self.slider_switch)
 
-        self.slider_switch.valueChanged.connect(self.update_theme)
+        # self.slider_switch.valueChanged.connect(self.update_theme)
 
-    def _fix_username(self):
-        user = get_login_user()
-        if user.startswith("E100") and not self.database.get_user(user):
-            self.fix_user.exec()
+    # def _fix_username(self):
+    #     user = get_login_user()
+    #     if user.startswith("E100") and not self.database.get_user(user):
+    #         self.fix_user.exec()
 
     def _create_separator(self):
         line = QFrame()
@@ -174,8 +182,8 @@ class PogoPinMonitoring(QMainWindow):
         self.taskbar_layout = QHBoxLayout()
         self.main_layout.addLayout(self.taskbar_layout)
 
-        self.app_name = QLabel(f"Pogo Pin Monitoring V{GlobalState.app_version} Beta")
-        self.comp_name = QLabel("AMS Asia .inc")
+        self.app_name = QLabel(f"Pogo Pin Monitoring V{GlobalState.app_version}")
+        self.comp_name = QLabel("AMS ASIA INC.")
         self.pc_login_name = QLabel(f"Basic User: {get_login_user().upper()}")
         self.dev_name = QLabel("Contact: oliver.feronel@ams.com")
         self.dev_name.setAlignment(Qt.AlignmentFlag.AlignRight)
@@ -192,15 +200,15 @@ class PogoPinMonitoring(QMainWindow):
         self.last_clicked_button = button
         stack.setCurrentIndex(index)
 
-    def update_theme(self, value: int):
-        if value == 100:
-            apply_stylesheet(self, ':/resources/dark.qss')
-            self.slider_switch.setEnabled(True)
-        elif value == 0:
-            apply_stylesheet(self, ':/resources/light.qss')
-            self.slider_switch.setEnabled(True)
-        else:
-            self.slider_switch.setEnabled(False)
+    # def update_theme(self, value: int):
+    #     if value == 100:
+    #         apply_stylesheet(self, ':/resources/dark.qss')
+    #         self.slider_switch.setEnabled(True)
+    #     elif value == 0:
+    #         apply_stylesheet(self, ':/resources/light.qss')
+    #         self.slider_switch.setEnabled(True)
+    #     else:
+    #         self.slider_switch.setEnabled(False)
 
     def show_notification(self, message: str):
         self.notification_manager.show_notification(message)

@@ -216,7 +216,6 @@ QLabel[role="formTitle"] {
     font-size: 22px;
     font-weight: bold;
     color: #34495e;
-    padding: 1px;
 }
 
 /* Required field label */
@@ -402,7 +401,7 @@ QTextEdit[role="autoSuggest"] QScrollBar::handle:vertical:hover {
 
 /* Style for the QCompleter popup */
 QListView[role="suggestionPopup"] {
-    background-color: white;
+    background-color: #3498DB;
     border: 1px solid #cccccc;
     border-radius: 4px;
     color: #000000;
@@ -424,53 +423,25 @@ QPushButton[role="saveButton"]:hover {
     background-color: #70c6ff;
 }
 
-QPushButton[role="addButton"] {
-    background-color: #2980b9;  /* Darker solid blue */
-    color: white;
-    font-size: 20px;
-    font-weight: 700;           /* Extra bold */
-    border-radius: 10px;
-    padding: 2px 2px;
-    border: 2px solid #1B4F72;  /* Solid border for strong outline */
-}
-
-QPushButton[role="addButton"]:hover {
-    background-color: #2980b9;
-}
-
-QPushButton[role="addButton"] {
-    background-color: #2980b9;  /* Darker solid blue */
-    color: white;
-    font-size: 20px;
-    font-weight: 700;           /* Extra bold */
-    border-radius: 10px;
-    padding: 2px 2px;
-    border: 2px solid #1B4F72;  /* Solid border for strong outline */
-}
-
-QPushButton[role="saveBHW"] {
-    background-color: #2980b9;  /* Darker solid blue */
-    color: white;
-    font-size: 15px;
-    font-weight: 700;           /* Extra bold */
-    border-radius: 10px;
-    padding: 2px 2px;
-    border: 2px solid #1B4F72;  /* Solid border for strong outline */
-}
-
-QPushButton[role="saveBHW"]:hover{
-    background-color: #2980b9;
-}
-
+/* Generic input styling */
 QLineEdit[role="saveBHW"] {
-    background-color: #353535;
-    border: 1px solid #555;
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: 'Segoe UI';
-    padding: 6px;
-    color: #ECF0F1;
+    background-color: #FFFFFF;
+    color: #2C3E50;
+    border: 1px solid #BDC3C7;
+    padding: 1px;
+    padding: 5px 5px;
+    border-radius: 4px;
 }
+
+QPushButton[role="addButton"], QPushButton[role="saveBHW"] {
+    background-color: #3498DB;
+    border: 1px solid #02121d;
+    color: white;
+    border-radius: 4px;
+    padding: 5px 5px;
+}
+
+
 
 /*  ##############################################################################
     #####                           SAP and History                          #####
@@ -694,14 +665,28 @@ QCalendarWidget QTableView::item:hover {
     border: 1px solid #3399FF;
 }
 
-/*  ##############################################################################
-    #####                           Data Graph                               #####
-    ############################################################################## */
 
+QPushButton[role="historyExport"], QPushButton[role="historyClrFilter"] {
+    background-color: #3498DB;
+    color: white;
+    border-radius: 4px;
+    padding: 3px;
+}
+
+QPushButton[role="historyExport"]:hover, QPushButton[role="historyClrFilter"]:hover {
+    background-color: #70c6ff;3
+}
+
+
+
+/* ##############################################################################
+   #####                           Data Graph                               #####
+   ############################################################################## */
 QLabel[role="dataGraph"] {
-    font-size: 15px;
+    font-size: 12px;
     font-weight: bold;
     color: #34495e;
+    background-color: transparent;
 }
 
 /* Generic input styling */
@@ -709,28 +694,26 @@ QLineEdit[role="dataGraph"] {
     background-color: #FFFFFF;
     color: #2C3E50;
     border: 1px solid #BDC3C7;
-    padding: 1px;
+    padding: 5px;
     border-radius: 4px;
     font-size: 11pt;
+    min-height: 25px;
 }
 
-/* QComboBox[role="dataGraph"] {
-    background-color: #FFFFFF;
-    color: #2C3E50;
-    border: 1px solid #BDC3C7;
-    padding: 1px;
-    border-radius: 4px;
-} */
+QLineEdit[role="dataGraph"]:focus {
+    border: 1px solid #3498db;
+    background-color: #ffffff;
+}
 
-
-/* ComboBox (SAP Number) base styling */
+/* ComboBox base styling */
 QComboBox[role="dataGraph"] {
     background-color: #ffffff;
     color: #2C3E50;
     border: 1px solid #BDC3C7;
-    padding: 1px;
+    padding: 5px;
     font-size: 11pt;
     border-radius: 4px;
+    min-height: 30px;
 }
 
 QComboBox[role="dataGraph"]:focus {
@@ -796,52 +779,129 @@ QComboBox[role="dataGraph"]::down-arrow {
     image: none;
 }
 
+/* Generate Button */
 QPushButton[role="dataGraph"] {
     background-color: #3498DB;
-    border: 1px solid #BDC3C7;
+    border: 1px solid #2980B9;
     color: white;
     border-radius: 4px;
-    padding: 2px;
+    padding: 8px 16px;
     font-size: 11pt;
+    font-weight: bold;
+    min-height: 30px;
 }
 
-/* SpinBox styled like dataGraph buttons */
-QSpinBox[role="dataGraph"] {
+QPushButton[role="dataGraph"]:hover {
+    background-color: #2980B9;
+}
+
+QPushButton[role="dataGraph"]:pressed {
+    background-color: #1F618D;
+}
+
+QPushButton[role="dataGraph"]:disabled {
+    background-color: #bdc3c7;
+    color: #7f8c8d;
+}
+
+/* SpinBox styling */
+QSpinBox[role="graphLimit"] {
     background-color: #FFFFFF;
     color: #2C3E50;
     border: 1px solid #BDC3C7;
     border-radius: 4px;
     font-size: 11pt;
-    padding: 1px;
+    padding: 5px;
+    min-height: 25px;
     selection-background-color: #D6EAF8;
     selection-color: #2C3E50;
 }
 
-/* Focus effect */
-QSpinBox[role="dataGraph"]:focus {
-    border: 1px solid #3498DB;
-    background-color: #FFFFFF;
+QSpinBox[role="graphLimit"]:focus {
+    border: 1px solid #3498db;
 }
 
-/* Remove arrows (up/down) */
-QSpinBox[role="dataGraph"]::up-button,
-QSpinBox[role="dataGraph"]::down-button {
-    width: 0;
-    height: 0;
+/* Hide SpinBox up/down buttons */
+QSpinBox[role="graphLimit"]::up-button,
+QSpinBox[role="graphLimit"]::down-button {
+    width: 0px;
+    height: 0px;
     border: none;
     background: none;
 }
 
-/*  ##############################################################################
-    #####                           ToolTip                                  #####
-    ############################################################################## */
+/* Context Menu */
+#graphContextMenu {
+    background-color: #FFFFFF;
+    color: #2C3E50;
+    border: 1px solid #3498DB;
+    border-radius: 4px;
+    padding: 4px;
+}
 
+#graphContextMenu::item {
+    padding: 6px 20px;
+    background-color: transparent;
+}
+
+#graphContextMenu::item:selected {
+    background-color: #3498DB;
+    color: white;
+}
+
+/* Calendar Line Edit in Data Graph */
+#dataRangeLineEdit {
+    background-color: #FFFFFF;
+    color: #2C3E50;
+    border: 1px solid #BDC3C7;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 11pt;
+    min-height: 25px;
+}
+
+#dataRangeLineEdit:focus {
+    border: 1px solid #3498db;
+    background-color: #ffffff;
+}
+
+/* CustomSpinBox specific */
+QSpinBox#graphLimitSpinBox {
+    background-color: #FFFFFF;
+    color: #2C3E50;
+    border: 1px solid #BDC3C7;
+    border-radius: 4px;
+    font-size: 11pt;
+    padding: 5px;
+    min-height: 25px;
+    selection-background-color: #D6EAF8;
+    selection-color: #2C3E50;
+}
+
+QSpinBox#graphLimitSpinBox:focus {
+    border: 1px solid #3498db;
+}
+
+QSpinBox#graphLimitSpinBox::up-button,
+QSpinBox#graphLimitSpinBox::down-button {
+    width: 0px;
+    height: 0px;
+    border: none;
+    background: none;
+}
+
+
+            /* Base Tooltip - using monospace for alignment */
 QToolTip {
-    background-color: #2c3e50; /* Dark blue-gray background */
-    color: #ecf0f1;            /* Light text */
-    border: 1px solid #3498db; /* Bright blue border */
-    padding: 5px;              /* Inner spacing */
-    border-radius: 4px;        /* Rounded corners */
-    font-size: 12px;
-    font-family: "Segoe UI", sans-serif;
+    background-color: #2C3E50;
+    color: #ECF0F1;
+    border: 1px solid #3498DB;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-family: 'Courier New', 'Consolas', 'Segoe UI', monospace;
+    font-size: 10pt;
+    font-weight: 400;
+    opacity: 240;
+    letter-spacing: 0.3px;
+    word-spacing: 0.5px;
 }

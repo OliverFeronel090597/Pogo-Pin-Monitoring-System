@@ -52,7 +52,7 @@ class AddNew(QWidget):
         self.add_hbw.setProperty("role", "addButton")
         self.add_hbw.setToolTip("Add BHW")
         self.add_hbw.clicked.connect(self.add_new_bhw_form)
-        self.add_hbw.setMaximumSize(30, 30)
+        self.add_hbw.setMaximumSize(40, 40)
 
         # Add form title
         form_title = QLabel("Loadboard Maintenance Form")
@@ -117,15 +117,15 @@ class AddNew(QWidget):
             label.setProperty("required", "true")
 
         # Add rows with labels and property
-        add_row_with_property("BHW Name :", self.bhw_name, required=True)
-        add_row_with_property("Date Replaced:", self.date_replaced, required=True)
-        add_row_with_property("SAP Number:", self.sap_input, required=True)
-        add_row_with_property("Run Count:", self.run_count, required=True)
-        add_row_with_property("Qty of Pogo Pin:", self.pogo_pin_use, required=True)
-        add_row_with_property("Price in Euro €:", self.total_price, required=True)
-        add_row_with_property("Site's:", self.select_site, required=True)
-        add_row_with_property("Replace By:", self.login_user, required=True)
-        add_row_with_property("Comment:", self.comment, required=True)
+        add_row_with_property("Board Hardware   ", self.bhw_name, required=True)
+        add_row_with_property("Date Replaced    ", self.date_replaced, required=True)
+        add_row_with_property("SAP Number       ", self.sap_input, required=True)
+        add_row_with_property("Run Count        ", self.run_count, required=True)
+        add_row_with_property("Qty of Pogo Pin  ", self.pogo_pin_use, required=True)
+        add_row_with_property("Price in Euro €  ", self.total_price, required=True)
+        add_row_with_property("Site's           ", self.select_site, required=True)
+        add_row_with_property("Replace By       ", self.login_user, required=True)
+        add_row_with_property("Comment          ", self.comment, required=True)
 
         # Wrap QFormLayout in a QWidget
         form_widget = QWidget()
@@ -201,7 +201,7 @@ class AddNew(QWidget):
     def update_runcount_value(self, value):
         self.run_count.setPlaceholderText("")
         self.run_count.setText(value)
-        if not int(value):
+        if not value:
             self.main_parent.show_notification("No runcount found.")
 
     def logo_position(self):

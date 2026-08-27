@@ -1,4 +1,4 @@
-# Pogo-Pin Monitoring System (PPM V5)
+# Pogo Pin Monitoring (PPM V5)
 
 A desktop application for tracking pogo-pin replacement and maintenance activities for loadboards and probecards, with role-based access, historical review, and reporting.
 
@@ -8,22 +8,24 @@ A desktop application for tracking pogo-pin replacement and maintenance activiti
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Installation](#installation)
-- [First-Time Setup](#first-time-setup)
-- [Usage](#usage)
-  - [Login](#login)
-  - [New Item View](#new-item-view)
-  - [History View](#history-view)
-  - [SAP View](#sap-view)
-  - [Extract Data View](#extract-data-view)
-- [Application Flow](#application-flow)
-- [Database Structure](#database-structure)
-- [Key Classes and Functions](#key-classes-and-functions)
-- [Dependencies](#dependencies)
-- [Notes](#notes)
-- [Contact](#contact)
+- [Pogo Pin Monitoring (PPM V5)](#pogo-pin-monitoring-ppm-v5)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [First-Time Setup](#first-time-setup)
+  - [Usage](#usage)
+    - [Login](#login)
+    - [New Item View](#new-item-view)
+    - [History View](#history-view)
+    - [SAP View](#sap-view)
+    - [Extract Data View](#extract-data-view)
+  - [Application Flow](#application-flow)
+  - [Database Structure](#database-structure)
+  - [Key Classes and Functions](#key-classes-and-functions)
+  - [Dependencies](#dependencies)
+  - [Notes](#notes)
+  - [Contact](#contact)
 
 ---
 
@@ -78,6 +80,16 @@ On first run, the application creates and uses an SQLite database file named POG
 The main tables include:
 
 - LOADBOARDS
+  -   id INTEGER PRIMARY KEY AUTOINCREMENT
+  -   BHWName TEXT
+  -   DateReplaced TIMESTAMP
+  -   RunCount TEXT
+  -   SapNumber INTEGER
+  -   QtyOfPogo INTEGER
+  -   PogoPrice REAL
+  -   Site TEXT
+  -   ReplaceBy TEXT
+  -   Remarks TEXT
 - POGOINSERTION
 - CREDENTIALS
 - SAPNUMBER

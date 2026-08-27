@@ -20,7 +20,7 @@ from libs.DatabaseConnector     import DatabaseConnector
 from libs.DataGraphing          import DataGraphing
 from libs.GlobalVariables       import GlobalState
 from libs.History               import History
-from libs.LoadingScreen         import LoadingScreen
+from libs.LoadingScreen         import LoadingSplashScreen
 from libs.LoginForm             import LoginDialog
 from libs.NotificationManager   import NotificationManager
 from libs.resources             import *
@@ -310,31 +310,35 @@ class PogoPinMonitoring(QMainWindow):
             event.ignore()
 
 
-def main(ex : QWidget):
-    loading_screen = LoadingScreen()
-    loading_screen.show()
+def main():
+    # loading_screen = LoadingSplashScreen()
+    # loading_screen.show()
 
-    progress = 0
-    total_steps = 100
-    progress_step = 1
+    # progress = 0
+    # total_steps = 100
+    # progress_step = 1
 
-    def update_progress():
-        nonlocal progress
-        if progress <= total_steps :
-            loading_screen.progress_bar.setValue(progress)
-            progress += progress_step
-        else:
-            loading_timer.stop()
-            loading_screen.close()
-            ex.show()
+    # def update_progress():
+    #     nonlocal progress
+    #     if progress <= total_steps :
+    #         loading_screen.progress_bar.setValue(progress)
+    #         progress += progress_step
+    #     else:
+    #         loading_timer.stop()
+    #         loading_screen.close()
+    #         ex.show()
 
-    loading_timer = QTimer()
-    loading_timer.timeout.connect(update_progress)
-    loading_timer.start(50)  # Update progress every 50 milliseconds
-
-if __name__ == "__main__":
+    # loading_timer = QTimer()
+    # loading_timer.timeout.connect(update_progress)
+    # loading_timer.start(1000)  # Update progress every 50 milliseconds
     app = QApplication(sys.argv)
     window = PogoPinMonitoring()
     window.show()
     #main(window)
     sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()
+
+

@@ -1,86 +1,82 @@
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPixmap
-from PyQt6.QtWidgets import (QHBoxLayout, QLabel, QProgressBar, QVBoxLayout,
-                             QWidget)
+import sys
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QPixmap, QFont, QPainter, QColor
+from PyQt6.QtWidgets import QApplication, QSplashScreen, QProgressBar, QVBoxLayout, QWidget, QLabel, QHBoxLayout
 
-# from libs.CenterWindow import MoveToCenter
 from libs.GlobalVariables import GlobalState
 from libs.resources import *
 
 
-class LoadingScreen(QWidget):
+class LoadingSplashScreen(QSplashScreen):
     def __init__(self):
-        super().__init__()
-
-        # Set frameless, centered, and always-on-top properties
-        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
-        self.setFixedSize(800, 300)  # Set fixed size for the window
-        #MoveToCenter(self)
-
-        # Set icon and title
-        self.setWindowTitle("")
-        # self.setWindowIcon(QIcon(':/icon/main-logo.png'))
-
-        # Main vertical layout
-        main_layout = QVBoxLayout()
-        # Top horizontal layout for author and image
-        top_layout = QHBoxLayout()
-        # top_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
-
-        # Image label
-        self.ams_label = QLabel()
-        self.ams_label.setPixmap(QPixmap(':/resources/image.png').scaled(400, 300, Qt.AspectRatioMode.KeepAspectRatio))
-        top_layout.addStretch()
-        top_layout.addWidget(self.ams_label)
-
-        main_layout.addLayout(top_layout)
+        # Create a pixmap for the splash screen background
+        self.splash_width = 800
+        self.splash_height = 300
         
-        # Image label
+        splash_pixmap = QPixmap(self.splash_width, self.splash_height)
+        splash_pixmap.fill(Qt.GlobalColor.white)
+        
+        super().__init__(splash_pixmap)
+        
+        # Set window flags (frameless and always on top)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
+        
+        # Create overlay widgets
+        self.overlay_widget = QWidget(self)
+        self.overlay_widget.setGeometry(0, 0, self.splash_width, self.splash_height)
+        self.overlay_widget.setStyleSheet("background-color: transparent;")
+        
+        # Main layout for overlay
+        layout = QVBoxLayout(self.overlay_widget)
+        layout.setContentsMargins(20, 20, 20, 20)
+        
+        # Top layout for images
+        top_layout = QVBoxLayout()
+        
+        # Create a horizontal layout for the two images
+        images_layout = QHBoxLayout()
+        images_layout.addStretch()
+        
+        # First image (AMS image)
+        self.ams_label = QLabel()
+        ams_pixmap = QPixmap(':/resources/image.png').scaled(200, 150, Qt.AspectRatioMode.KeepAspectRatio)
+        self.ams_label.setPixmap(ams_pixmap)
+        images_layout.addWidget(self.ams_label)
+        
+        images_layout.addStretch()
+        
+        # Second image (main logo)
         self.image_label = QLabel()
-        self.image_label.setPixmap(QPixmap(':/resources/main-logo.png').scaled(400, 300, Qt.AspectRatioMode.KeepAspectRatio))
-        top_layout.addStretch()
-        top_layout.addWidget(self.image_label)
-
-        buttom_layout = QHBoxLayout()
-        main_layout.addLayout(buttom_layout)
-
+        logo_pixmap = QPixmap(':/resources/main-logo.png').scaled(200, 150, Qt.AspectRatioMode.KeepAspectRatio)
+        self.image_label.setPixmap(logo_pixmap)
+        images_layout.addWidget(self.image_label)
+        
+        images_layout.addStretch()
+        top_layout.addLayout(images_layout)
+        layout.addLayout(top_layout)
+        
+        # Bottom layout for labels
+        bottom_layout = QHBoxLayout()
+        bottom_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
         # Author label
         self.author_label = QLabel("AMS Asia")
-        self.author_label.setAlignment(Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignCenter)
-        self.author_label.setStyleSheet("font-weight: bold; font-size: 15px; ")
-        buttom_layout.addWidget(self.author_label)
-
-        # Loading label
+        self.author_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.author_label.setStyleSheet("font-weight: bold; font-size: 15px; color: #333333; background-color: transparent;")
+        bottom_layout.addWidget(self.author_label)
+        
+        # Loading label with version
         self.loading_label = QLabel(f"PPM Tool Version {GlobalState.app_version}")
         self.loading_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.loading_label.setStyleSheet("font-weight: bold; font-size: 15px;")
-        buttom_layout.addWidget(self.loading_label)
+        self.loading_label.setStyleSheet("font-weight: bold; font-size: 15px; color: #333333; background-color: transparent;")
+        bottom_layout.addWidget(self.loading_label)
         
-        # Progress bar setup
+        layout.addLayout(bottom_layout)
+        
+        # Progress bar
         self.progress_bar = QProgressBar()
-
-        # Add layouts and widgets to the main layout
-        main_layout.addWidget(self.progress_bar)
-
-        self.setLayout(main_layout)
-
-        self.setStyleSheet("""
-            QWidget {
-                background-color: #ffffff;
-                color: #000000;
-                font-family: 'Segoe UI', sans-serif;
-                font-size: 14px;
-            }
-
-            QLabel {
-                color: #333333;
-            }
-
-            QLabel, QLabel {
-                font-weight: bold;
-                font-size: 15px;
-            }
-
+        self.progress_bar.setFixedHeight(20)
+        self.progress_bar.setStyleSheet("""
             QProgressBar {
                 border: 1px solid #c0c0c0;
                 border-radius: 5px;
@@ -88,30 +84,78 @@ class LoadingScreen(QWidget):
                 text-align: center;
                 height: 20px;
             }
-
             QProgressBar::chunk {
-                background-color: #4CAF50;  /* smooth green fill */
+                background-color: #4CAF50;
                 border-radius: 5px;
             }
-
         """)
+        layout.addWidget(self.progress_bar)
+        
+        # Ensure overlay is on top
+        self.overlay_widget.raise_()
+        
+        # Set splash screen message styles
+        self.setStyleSheet("""
+            QSplashScreen {
+                background-color: #ffffff;
+            }
+        """)
+    
+    def update_progress(self, value, message=""):
+        """Update progress bar value and optional message"""
+        self.progress_bar.setValue(value)
+        if message:
+            self.loading_label.setText(message)
+        QApplication.processEvents()
+    
+    def show_message(self, message):
+        """Show a message on the splash screen"""
+        self.loading_label.setText(message)
+        QApplication.processEvents()
 
 
+def main(ex: QWidget):
+    # Create and show splash screen
+    loading_screen = LoadingSplashScreen()
+    loading_screen.show()
+    
+    # Process events to ensure splash screen is rendered
+    QApplication.processEvents()
+    
+    progress = 0
+    total_steps = 100
+    
+    def update_progress():
+        nonlocal progress
+        if progress <= total_steps:
+            loading_screen.progress_bar.setValue(progress)
+            if progress < 30:
+                loading_screen.loading_label.setText(f"Initializing... {progress}%")
+            elif progress < 60:
+                loading_screen.loading_label.setText(f"Loading modules... {progress}%")
+            elif progress < 90:
+                loading_screen.loading_label.setText(f"Preparing interface... {progress}%")
+            else:
+                loading_screen.loading_label.setText(f"Almost ready... {progress}%")
+            
+            progress += 1
+            QApplication.processEvents()
+        else:
+            loading_timer.stop()
+            loading_screen.close()
+            ex.show()
+    
+    # Create timer with 50ms intervals for smooth progress
+    loading_timer = QTimer()
+    loading_timer.timeout.connect(update_progress)
+    loading_timer.start(50)  # Update progress every 50 milliseconds
 
-    # def center_on_screen(self):
-    #     screen_geometry = QApplication.primaryScreen().availableGeometry()
-    #     x = (screen_geometry.width() - self.width()) // 2
-    #     y = (screen_geometry.height() - self.height()) // 2
-    #     self.move(x, y)
 
-    # Close window on mouse click
-    # def mousePressEvent(self, event):
-    #     self.close()
-
-
-
-# # Run the application
-# app = QApplication([])
-# window = LoadingScreen()
-# window.show()
-# app.exec()
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = PogoPinMonitoring()
+    
+    # Show splash screen first, then main window
+    main(window)
+    
+    sys.exit(app.exec())

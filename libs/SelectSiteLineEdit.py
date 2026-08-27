@@ -39,7 +39,7 @@ class SelectSite(QLineEdit):
         first, last = sorted_nums[0], sorted_nums[-1]
         
         if len(sorted_nums) == last - first + 1:
-            return f"{first}..{last}"
+            return f"{first}, {last}"
         else:
             return ", ".join(str(n) for n in sorted_nums)
 
